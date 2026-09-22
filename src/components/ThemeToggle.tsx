@@ -1,55 +1,9 @@
 import { useState } from "react";
-
-export type ThemeMode = "light" | "dark" | "system";
-
-type Props = {
-  mode: ThemeMode;
-  onChange: (mode: ThemeMode) => void;
-};
-
-const labels: Record<ThemeMode, string> = {
-  light: "Day",
-  dark: "Night",
-  system: "System",
-};
-
-export default function ThemeToggle({ mode, onChange }: Props) {
-  const [open, setOpen] = useState(false);
-
-  return (
-    <div className="atmosphere" data-interactive>
-      <button
-        type="button"
-        className="atmosphere-trigger"
-        aria-expanded={open}
-        aria-controls="atmosphere-menu"
-        onClick={() => setOpen((value) => !value)}
-      >
-        <span className="atmosphere-dot" aria-hidden="true" />
-        <span>Change the atmosphere</span>
-        <span className="atmosphere-arrow" aria-hidden="true">{open ? "↑" : "↓"}</span>
-      </button>
-
-      {open && (
-        <div className="atmosphere-menu" id="atmosphere-menu" role="menu">
-          {(Object.keys(labels) as ThemeMode[]).map((item) => (
-            <button
-              key={item}
-              type="button"
-              role="menuitemradio"
-              aria-checked={mode === item}
-              className={mode === item ? "atmosphere-option active" : "atmosphere-option"}
-              onClick={() => {
-                onChange(item);
-                setOpen(false);
-              }}
-            >
-              <span>{labels[item]}</span>
-              <span className="mono">{mode === item ? "ACTIVE" : item.toUpperCase()}</span>
-            </button>
-          ))}
-        </div>
-      )}
-    </div>
-  );
+export type ThemeMode="paper"|"void"|"terminal"|"dusk";
+type Props={mode:ThemeMode;onChange:(mode:ThemeMode)=>void};
+const themes:Array<[ThemeMode,string,string]>=[["paper","Paper","Warm editorial"],["void","Void","Cinematic dark"],["terminal","Terminal","Technical"],["dusk","Dusk","Blue-hour"]];
+export default function ThemeToggle({mode,onChange}:Props){
+ const [open,setOpen]=useState(false); const current=themes.find(([id])=>id===mode)??themes[0];
+ return <div className="atmosphere"><button className="atmosphere-trigger" type="button" aria-expanded={open} onClick={()=>setOpen(v=>!v)}><span className="atmosphere-dot"/><span>Change the atmosphere</span><strong>{current[1]}</strong><span>{open?"↑":"↓"}</span></button>
+ {open&&<div className="atmosphere-menu" role="menu">{themes.map(([id,label,description])=><button key={id} type="button" role="menuitemradio" aria-checked={mode===id} className={mode===id?"atmosphere-option active":"atmosphere-option"} onClick={()=>{onChange(id);setOpen(false)}}><span className={`theme-swatch theme-swatch--${id}`}/><span><b>{label}</b><small>{description}</small></span><span className="mono">{mode===id?"ACTIVE":id.toUpperCase()}</span></button>)}</div>}</div>;
 }
