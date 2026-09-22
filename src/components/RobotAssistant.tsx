@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 
 type Props = { section?: string };
 
@@ -82,7 +82,7 @@ export default function RobotAssistant({ section = "START" }: Props) {
         "--ry": `${position.y}vh`,
         "--look-x": look.x,
         "--look-y": look.y,
-      } as React.CSSProperties}
+      } as CSSProperties}
       aria-label="Open the Studio project builder"
       onClick={() => document.getElementById("builder-trigger")?.click()}
       onMouseEnter={() => setHovered(true)}
