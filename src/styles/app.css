@@ -28,3 +28,14 @@ section{max-width:1540px;margin:auto;padding:clamp(100px,12vw,180px) clamp(20px,
 @media(max-width:800px){.site-nav{grid-template-columns:1fr auto}.site-nav nav{display:none}.hero h1{font-size:clamp(3.5rem,13vw,6rem)}.hero p,.hero-actions,.hero-meta{margin-left:0}.hero-noise,.hero-coordinate{display:none}.hero-word{font-size:40vw}.recognition-grid,.proof-grid,.process-rail{grid-template-columns:1fr 1fr}.workshop,.estimate,.builder-final{grid-template-columns:1fr}.workshop-visual{min-height:480px}.process-rail article{min-height:250px}.builder-options.three{grid-template-columns:1fr}.custom-cursor{display:none}}
 @media(max-width:600px){section{padding:90px 18px}.atmosphere-trigger span:nth-child(2){display:none}.atmosphere-menu{right:-8px}.hero{padding-top:90px}.hero-meta{flex-direction:column;gap:7px}.recognition-grid,.proof-grid,.process-rail{grid-template-columns:1fr}.recognition-card{min-height:270px}.service-canvas{min-height:560px;padding:28px}.service-canvas h3{font-size:clamp(3rem,15vw,5rem);margin-top:70px}.workshop-screen{width:95%}.tool-list button{grid-template-columns:38px 1fr}.tool-list button>b{grid-column:2}.faq-list button{grid-template-columns:30px 1fr 18px}footer{flex-direction:column;align-items:flex-start;margin-top:100px}.guide-robot{transform:translate3d(calc(var(--rx) - 55px),calc(var(--ry) - 75px),0) scale(.34)}.guide-robot__label{display:none}.builder-panel{max-height:94vh;padding:22px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}[data-reveal]{opacity:1;transform:none}.custom-cursor{display:none}}
+
+.builder-note{color:var(--copy);font-size:.8rem;line-height:1.6;border-left:2px solid var(--accent);padding:12px 15px;margin-top:16px}
+.builder-blueprint{margin-top:18px;border:1px solid var(--strong);background:color-mix(in srgb,var(--accent) 5%,transparent);padding:22px;animation:menu .4s var(--ease)}
+.builder-blueprint .mono{color:var(--accent)}
+.builder-blueprint h3{font-size:clamp(2rem,4vw,4rem);line-height:.9;letter-spacing:-.06em;font-weight:450;margin:14px 0}
+.builder-blueprint p{color:var(--copy);max-width:650px}
+.blueprint-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:20px}
+.blueprint-grid>div{display:grid;gap:7px;border-top:1px solid var(--line);padding-top:12px}
+.blueprint-grid b{font:8px "SFMono-Regular",Consolas,monospace;color:var(--accent);letter-spacing:.12em}
+.blueprint-grid span{font-size:.82rem;color:var(--copy);text-transform:capitalize}
+@media(max-width:600px){.blueprint-grid{grid-template-columns:1fr}}
