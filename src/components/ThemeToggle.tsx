@@ -1,0 +1,3 @@
+export type ThemeMode="light"|"dark"|"system";
+type Props={mode:ThemeMode;onChange:(mode:ThemeMode)=>void};
+export default function ThemeToggle({mode,onChange}:Props){return <div className="theme-control" aria-label="Theme">{(["light","dark","system"] as ThemeMode[]).map(item=><button key={item} type="button" className={mode===item?"theme-option active":"theme-option"} aria-pressed={mode===item} onClick={()=>onChange(item)}>{item}</button>)}</div>}
