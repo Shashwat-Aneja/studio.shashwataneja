@@ -1,3 +1,22 @@
-type Props={message:string;state:"idle"|"guiding"|"thinking";onAction:()=>void};
-function RobotMark(){return <div className="robot-mark" aria-hidden="true"><span className="robot-antenna"/><div className="robot-head"><span className="robot-eye"/><span className="robot-eye"/><span className="robot-mouth"/></div><div className="robot-body"><span/><span/><span/></div></div>}
-export default function RobotAssistant({message,state,onAction}:Props){return <aside className={`assistant-panel assistant-${state}`} aria-label="Studio assistant"><div className="assistant-visual"><RobotMark/><span className="assistant-state">{state}</span></div><div className="assistant-copy"><p className="micro-label">NODE A-01 / STUDIO ASSISTANT</p><p>{message}</p><button className="text-action" type="button" onClick={onAction}>Start with guidance <span aria-hidden="true">↗</span></button></div></aside>}
+type Props = { section?: string };
+
+export default function RobotAssistant({ section = "FOLLOWING" }: Props) {
+  return (
+    <div className="guide-robot" aria-hidden="true">
+      <div className="guide-robot__antenna" />
+      <div className="guide-robot__head"><span /><span /></div>
+      <div className="guide-robot__neck" />
+      <div className="guide-robot__body"><i /><i /><i /></div>
+      <div className="guide-robot__arm guide-robot__arm--left" />
+      <div className="guide-robot__arm guide-robot__arm--right" />
+      <div className="guide-robot__hand guide-robot__hand--left" />
+      <div className="guide-robot__hand guide-robot__hand--right" />
+      <div className="guide-robot__leg guide-robot__leg--left" />
+      <div className="guide-robot__leg guide-robot__leg--right" />
+      <div className="guide-robot__foot guide-robot__foot--left" />
+      <div className="guide-robot__foot guide-robot__foot--right" />
+      <div className="guide-robot__signal" />
+      <span className="guide-robot__label mono">{section}</span>
+    </div>
+  );
+}
