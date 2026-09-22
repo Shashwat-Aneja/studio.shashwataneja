@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, type CSSProperties } from "react";
 import "./styles/app.css";
 import { serviceCategories } from "./data/services";
 import RobotAssistant from "./components/RobotAssistant";
@@ -166,7 +166,7 @@ export default function App() {
         <div className="capability-field">
           <nav className="capability-list" aria-label="Studio services">
             {serviceCategories.map((category, index) => (
-              <button key={category.id} className={activeCategory === category.id ? "capability-row is-active" : "capability-row"} onClick={() => setActiveCategory(category.id)} data-interactive style={{ "--row-index": index } as React.CSSProperties}>
+              <button key={category.id} className={activeCategory === category.id ? "capability-row is-active" : "capability-row"} onClick={() => setActiveCategory(category.id)} data-interactive style={{ "--row-index": index } as CSSProperties}>
                 <span className="mono">{category.number}</span><strong>{category.name}</strong><span>↗</span>
               </button>
             ))}
@@ -212,7 +212,7 @@ export default function App() {
             ["03 / BUILD", "Make the system tangible.", "Design and implementation with visible milestones and decisions."],
             ["04 / LAUNCH", "Put the finished thing into the world.", "Infrastructure, deployment, handoff and the path into the client dashboard."],
           ].map(([label, title, copy], index) => (
-            <article className="workshop-station reveal reveal--up" data-reveal key={label} style={{ "--station-index": index } as React.CSSProperties}>
+            <article className="workshop-station reveal reveal--up" data-reveal key={label} style={{ "--station-index": index } as CSSProperties}>
               <div className="workshop-station__top"><span className="mono">{label}</span><span>↗</span></div>
               <h3>{title}</h3><p>{copy}</p>
             </article>
@@ -227,7 +227,7 @@ export default function App() {
         </div>
         <div className="tools-index">
           {tools.map(([number, title, copy], index) => (
-            <button className="tool-row reveal reveal--up" data-reveal key={number} onClick={() => setBuilderOpen(true)} data-interactive style={{ "--tool-index": index } as React.CSSProperties}>
+            <button className="tool-row reveal reveal--up" data-reveal key={number} onClick={() => setBuilderOpen(true)} data-interactive style={{ "--tool-index": index } as CSSProperties}>
               <span className="mono">{number}</span><div><h3>{title}</h3><p>{copy}</p></div><span className="tool-status mono">COMING / BUILD ↗</span>
             </button>
           ))}
