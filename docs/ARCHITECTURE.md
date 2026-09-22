@@ -39,3 +39,14 @@ Browsing and estimation should not create persistent client records.
 6. Booking, agreement and payment contracts.
 7. Backend and webhook-authoritative handoff.
 8. Protected preview, accessibility, SEO, performance and production QA.
+
+## Studio V2 intelligence foundation
+The feature branch now contains the first production-oriented intelligence layer:
+- Full service catalogue with the approved pricing baseline.
+- Structured ProjectRequirement model.
+- Rule-driven recommendation engine.
+- Rule-driven pricing engine with scope, integration, speed, bundle and booking rules.
+- Timeline engine.
+- Blueprint generator combining recommendations, estimate and delivery phases.
+- Seven-step Build Your Project workshop UI connected to the engines.
+- Blueprint reveal state remains client-side only; no permanent client/project records are created.
