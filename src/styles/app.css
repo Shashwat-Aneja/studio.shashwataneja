@@ -117,3 +117,13 @@ section{max-width:1540px;margin:auto;padding:clamp(100px,12vw,180px) clamp(20px,
 @keyframes timelineLoad{from{transform:scaleX(0);transform-origin:left}to{transform:scaleX(1);transform-origin:left}}
 @media(max-width:800px){.tool-lab-head{display:block}.tool-lab-head>span{display:block;margin-top:18px}.tool-lab-layout{grid-template-columns:1fr}.tool-lab-nav{border-right:0;display:grid;grid-template-columns:1fr 1fr}.tool-lab-nav button{border-right:1px solid var(--line)}.lab-metrics{grid-template-columns:1fr}.score-tool{grid-template-columns:1fr}.score-ring{margin:auto}.roi-tool{grid-template-columns:1fr}.roi-result{grid-column:auto}}
 @media(max-width:600px){.tool-lab-nav{grid-template-columns:1fr}.tool-lab-stage{padding:22px}.timeline-row{grid-template-columns:30px 1fr 35px}}
+
+.package-tool>strong{display:block;font-size:clamp(2.5rem,5vw,5rem);line-height:.85;letter-spacing:-.065em;font-weight:450;margin:16px 0}
+.package-items{display:grid;gap:8px;margin:25px 0}
+.package-items span{display:flex;justify-content:space-between;gap:15px;padding:13px;border-top:1px solid var(--line);text-transform:capitalize;color:var(--ink)}
+.package-items small{color:var(--muted);font-size:.72rem;text-align:right;max-width:55%}
+.bundle-tool h4{font-size:clamp(2rem,4vw,4rem);line-height:.9;letter-spacing:-.055em;font-weight:450;margin:18px 0 28px}
+.bundle-lines{border-top:1px solid var(--line);display:grid}
+.bundle-lines span{display:flex;justify-content:space-between;gap:20px;padding:15px 0;border-bottom:1px solid var(--line);color:var(--copy)}
+.bundle-lines b{color:var(--ink);font-weight:500;text-align:right}
+.bundle-tool p{color:var(--muted);font-size:.8rem;line-height:1.55;max-width:600px;margin:20px 0}
