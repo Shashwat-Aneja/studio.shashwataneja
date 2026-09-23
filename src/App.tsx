@@ -36,6 +36,7 @@ export default function App(){
  const [theme,setTheme]=useState<ThemeMode>(()=>(localStorage.getItem("studio-theme") as ThemeMode)||"paper");
  const [faq,setFaq]=useState<number|null>(null);
  const [blueprintOpen,setBlueprintOpen]=useState(false);
+ const [blueprintReveal,setBlueprintReveal]=useState(false);
  const [bookingOpen,setBookingOpen]=useState(false);
 
  const active=useMemo(()=>serviceCategories.find(c=>c.id===activeCategory)??serviceCategories[0],[activeCategory]);
@@ -58,7 +59,7 @@ export default function App(){
  },[]);
  useEffect(()=>{const s=()=>document.documentElement.style.setProperty("--scroll-progress",Math.min(100,scrollY/(document.documentElement.scrollHeight-innerHeight)*100)+"%");addEventListener("scroll",s,{passive:true});s();return()=>removeEventListener("scroll",s)},[]);
 
- const open=(goal?:ProjectGoal)=>{setRequirement(r=>({...r,goal:goal??r.goal}));setSelectedFeatures([]);setStep(1);setBlueprintOpen(false);setBuilderOpen(true)};
+ const open=(goal?:ProjectGoal)=>{setRequirement(r=>({...r,goal:goal??r.goal}));setSelectedFeatures([]);setStep(1);setBlueprintOpen(false);setBlueprintReveal(false);setBuilderOpen(true)};
  const update=(patch:Partial<ProjectRequirement>)=>setRequirement(r=>({...r,...patch}));
  const toggleFeature=(f:string)=>setSelectedFeatures(v=>v.includes(f)?v.filter(x=>x!==f):[...v,f]);
  const catGoal=(id:string):ProjectGoal=>id==="commerce"?"commerce":id==="application"?"application":id==="branding"?"brand":id==="growth"?"growth":id==="automation"?"technical":"presence";
@@ -98,8 +99,8 @@ export default function App(){
    {step===5&&<div className="builder-options three">{[["focused","Focused","Clear, efficient interface."],["custom","Custom","Designed around your brand and users."],["signature","Signature","Distinctive interaction-led experience."]].map(([v,t,c])=><button key={v} className={requirement.designLevel===v?"active":""} onClick={()=>update({designLevel:v as ProjectRequirement["designLevel"]})}><strong>{t}</strong><small>{c}</small></button>)}</div>}
    {step===6&&<div className="builder-options three">{[["standard","Standard","Normal delivery"],["priority","Priority","+25%"],["rush","Rush","+20%"]].map(([v,t,c])=><button key={v} className={requirement.deliverySpeed===v?"active":""} onClick={()=>update({deliverySpeed:v as DeliverySpeed})}><strong>{t}</strong><small>{c}</small></button>)}</div>}
    {step===7&&<div className="builder-final"><div className="speed-options">{[["under-10k","Under ₹10k"],["10-25k","₹10k–₹25k"],["25-50k","₹25k–₹50k"],["50-100k","₹50k–₹1L"],["100k-plus","₹1L+"]].map(([v,t])=><button key={v} className={requirement.budgetRange===v?"active":""} onClick={()=>update({budgetRange:v as ProjectRequirement["budgetRange"]})}><strong>{t}</strong><span>Budget signal</span></button>)}</div><div className="builder-summary"><span className="mono">BLUEPRINT PREVIEW</span><strong>{formatINR(blueprint.estimate.low)} — {formatINR(blueprint.estimate.high)}</strong><div><span>2% booking</span><b>{formatINR(blueprint.estimate.booking)}</b></div><p>{blueprint.objective}</p><button className="text-action" onClick={()=>setBlueprintOpen(!blueprintOpen)}>{blueprintOpen?"Hide blueprint":"Reveal blueprint"} ↗</button></div></div>}
-   {blueprintOpen&&<div className="builder-blueprint"><span className="mono">GENERATED ROUTE</span><h3>{blueprint.title}</h3><p>{blueprint.objective}</p><div className="blueprint-grid"><div><b>RECOMMENDED</b>{recommendations.map(x=><span key={x.serviceId}>{x.serviceId.replaceAll("-"," ")}</span>)}</div><div><b>TIMELINE</b>{blueprint.timeline.map(x=><span key={x.name}>{x.name} / {x.duration}d</span>)}</div></div></div><div className="blueprint-actions"><button className="hero-cta hero-cta--solid" onClick={()=>setBookingOpen(true)}>Review & book ↘</button><button className="hero-cta" onClick={()=>setStep(6)}>Modify route ↖</button></div>}
-   <div className="builder-footer"><button className="text-action" onClick={()=>step>1?setStep(step-1):setBuilderOpen(false)}>{step>1?"Back":"Close"} ↖</button>{step<7?<button className="hero-cta hero-cta--solid" onClick={()=>setStep(step+1)}>Continue ↘</button>:<button className="hero-cta hero-cta--solid" onClick={()=>{setBlueprintOpen(true);}}>Generate blueprint ↘</button>}</div>
+   {blueprintOpen&&<div className={blueprintReveal?"blueprint-reveal is-revealed":"blueprint-reveal"} aria-hidden={!blueprintReveal}><span className="mono">BLUEPRINT SIGNAL</span><i/><i/><i/></div><div className="builder-blueprint"><span className="mono">GENERATED ROUTE</span><h3>{blueprint.title}</h3><p>{blueprint.objective}</p><div className="blueprint-grid"><div><b>RECOMMENDED</b>{recommendations.map(x=><span key={x.serviceId}>{x.serviceId.replaceAll("-"," ")}</span>)}</div><div><b>TIMELINE</b>{blueprint.timeline.map(x=><span key={x.name}>{x.name} / {x.duration}d</span>)}</div></div></div><div className="blueprint-actions"><button className="hero-cta hero-cta--solid" onClick={()=>setBookingOpen(true)}>Review & book ↘</button><button className="hero-cta" onClick={()=>setStep(6)}>Modify route ↖</button></div>}
+   <div className="builder-footer"><button className="text-action" onClick={()=>step>1?setStep(step-1):setBuilderOpen(false)}>{step>1?"Back":"Close"} ↖</button>{step<7?<button className="hero-cta hero-cta--solid" onClick={()=>setStep(step+1)}>Continue ↘</button>:<button className="hero-cta hero-cta--solid" onClick={()=>{setBlueprintOpen(true);setBlueprintReveal(true);}}>Generate blueprint ↘</button>}</div>
   </section></div>}
  </main>;
 }
