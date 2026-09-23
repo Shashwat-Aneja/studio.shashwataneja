@@ -7,6 +7,7 @@ import {createBlueprint} from "./engine/blueprint";
 import {recommendServices} from "./engine/recommendation";
 import RobotAssistant from "./components/RobotAssistant";
 import ThemeToggle,{type ThemeMode} from "./components/ThemeToggle";
+import ToolsWorkbench from "./components/ToolsWorkbench";
 
 const outcomes:Array<[string,string,string,ProjectGoal]>=[
  ["01","I need a stronger online presence.","Website, landing page, portfolio or business presence.","presence"],
@@ -77,7 +78,7 @@ export default function App(){
 
   <section className="process" id="process"><div className="section-head" data-reveal><span className="mono">06 / THE ROUTE</span><h2>A sales journey that behaves<br/><i>like a product.</i></h2></div><div className="process-rail">{[["01","Discover","Start with the outcome."],["02","Configure","Shape scope and requirements."],["03","Estimate","See investment and timeline."],["04","Review","Confirm the route and agreement."],["05","Book","Pay 2%; then initialize the project."]].map(([n,t,c],i)=><article key={n} data-reveal style={{"--i":i} as CSSProperties}><span className="mono">{n}</span><div/><h3>{t}</h3><p>{c}</p></article>)}</div></section>
 
-  <section className="tools" id="tools"><div className="section-head split" data-reveal><div><span className="mono">07 / FREE TOOLS</span><h2>Useful enough to try<br/><i>before you buy.</i></h2></div><span className="mono">NO SIGN-UP / PREVIEW</span></div><div className="tool-list">{tools.map(([n,t,c],i)=><button key={n} data-reveal style={{"--i":i} as CSSProperties} onClick={()=>open()}><span className="mono">{n}</span><div><h3>{t}</h3><p>{c}</p></div><b>TRY IT ↗</b></button>)}</div></section>
+  <section className="tools" id="tools"><div className="section-head split" data-reveal><div><span className="mono">07 / FREE TOOLS</span><h2>Useful enough to try<br/><i>before you buy.</i></h2></div><span className="mono">NO SIGN-UP / PREVIEW</span></div><div className="tool-list">{tools.map(([n,t,c],i)=><button key={n} data-reveal style={{"--i":i} as CSSProperties} onClick={()=>open()}><span className="mono">{n}</span><div><h3>{t}</h3><p>{c}</p></div><b>TRY IT ↗</b></button>)}</div></section><ToolsWorkbench requirement={liveRequirement} onStart={open}/>
 
   <section className="proof"><div className="section-head" data-reveal><span className="mono">08 / TRUST WITHOUT THEATRE</span><h2>Clarity is part of<br/><i>the product.</i></h2></div><div className="proof-grid">{[["Real capabilities","No invented client logos, testimonials or vanity numbers."],["Transparent starting points","Indicative ranges appear before booking."],["Technical handoff","Confirmed bookings can move into the dedicated dashboard."],["Human judgment","The system guides; the final scope is confirmed with you."]].map(([t,c],i)=><article key={t} data-reveal><span className="mono">0{i+1}</span><h3>{t}</h3><p>{c}</p></article>)}</div></section>
 
