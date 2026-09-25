@@ -159,18 +159,18 @@ section{max-width:1540px;margin:auto;padding:clamp(100px,12vw,180px) clamp(20px,
    No opaque card fills.
    ───────────────────────────────────────────────────────── */
 :root{
-  --void:#0B0A0F;
-  --charcoal:#1A1823;
+  --void:var(--bg);
+  --charcoal:color-mix(in srgb,var(--bg) 82%,var(--ink));
   --lavender:#B7A7D9;
   --fog:#DCCDDC;
   --sage:#A7C4B0;
   --ember:#B8846A;
-  --border:rgba(183,167,217,.16);
+  --border:rgba(183,167,217,.16);\n  --panel:rgba(255,255,255,.025);
   --line:rgba(220,205,220,.10);
   --strong:rgba(220,205,220,.32);
   --ease:cubic-bezier(.22,1,.36,1);
 }
-html,body{background:var(--void)!important;color:#F1EDF4}
+html,body{background:var(--bg)!important;color:var(--ink)}
 body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
 .studio-site{background:transparent}
 .studio-environment{background:
