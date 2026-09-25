@@ -222,7 +222,7 @@ body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-ser
 @supports (animation-timeline:view()){
  .proof-photo{animation:photoRise linear both;animation-timeline:view(block);animation-range:entry 5% exit 72%}
 }
-@keyframes fieldDriftA{to{transform:translate3vw,5vh) scale(1.06)}}
+@keyframes fieldDriftA{to{transform:translate(3vw,5vh) scale(1.06)}}
 @keyframes fieldDriftB{to{transform:translate(-4vw,3vh) scale(.94)}}
 @keyframes fieldDriftC{to{transform:translate(2vw,-5vh) scale(1.08)}}
 @keyframes scanMove{to{transform:translateY(12px)}}
