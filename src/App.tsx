@@ -65,10 +65,10 @@ export default function App(){
  const catGoal=(id:string):ProjectGoal=>id==="commerce"?"commerce":id==="application"?"application":id==="branding"?"brand":id==="growth"?"growth":id==="automation"?"technical":"presence";
 
  return <main className="studio-site">
-  <div className="studio-environment" aria-hidden="true"><div className="ambient-orb orb-a"/><div className="ambient-orb orb-b"/><div className="ambient-grid"/><div className="grain"/></div>
+  <div className="studio-environment" aria-hidden="true"><div className="ambient-orb orb-a"/><div className="ambient-orb orb-b"/><div className="ambient-orb orb-c"/><div className="ambient-grid"/><div className="ambient-scanlines"/><div className="grain"/></div>
   <div className="custom-cursor" aria-hidden="true"><span/></div>
-  <header className="site-nav"><a className="wordmark" href="#top">SA<span>/</span>STUDIO</a><nav><a href="#services">Services</a><a href="#workshop">Workshop</a><a href="#tools">Tools</a><a href="#contact">Start</a></nav><ThemeToggle mode={theme} onChange={setTheme}/></header>
-  <div className="scroll-codebar"><b className="mono">&lt;/&gt;</b></div><RobotAssistant/>
+  <header className="site-nav"><a className="wordmark" href="#top">SA<span>/</span>STUDIO</a><nav><a href="#services">Services</a><a href="#workshop">Workshop</a><a href="#tools">Tools</a><a href="#proof">Proof</a><a href="#contact">Start</a></nav><ThemeToggle mode={theme} onChange={setTheme}/></header>
+  <div className="scroll-codebar"><b className="mono">&lt;/&gt;</b></div><RobotAssistant onOpenBuilder={()=>open()}/>
   <section className="hero" id="top"><span className="hero-noise mono">STUDIO / DIGITAL SERVICES / 001</span><div className="hero-inner"><span className="mono hero-kicker" data-reveal>YOU BRING THE PROBLEM. THE STUDIO BUILDS THE ROUTE.</span><h1 data-reveal>Build what your<br/><i>business needs.</i></h1><p data-reveal>Websites, software, design, branding, infrastructure, automation and growth — shaped around the outcome, not a generic package.</p><div className="hero-actions" data-reveal><button className="hero-cta hero-cta--solid" onClick={()=>{setBuilderOpen(true);setStep(7);}}>Build my project <span>↘</span></button><a className="hero-cta" href="#discover">I'm not sure yet <span>↘</span></a></div><div className="hero-meta mono" data-reveal><span>FROM ₹4,999</span><span>2% BOOKING</span><span>NO ACCOUNT TO EXPLORE</span></div></div><span className="hero-index mono">01 / ENTRY</span><span className="hero-coordinate mono">STUDIO / INDIA / ONLINE</span><span className="hero-word">STUDIO</span></section>
 
   <section className="recognition" id="discover"><div className="section-head" data-reveal><span className="mono">02 / RECOGNITION ENGINE</span><h2>Start with the thing<br/><i>that needs to change.</i></h2></div><div className="recognition-grid">{outcomes.map(([n,t,c,g],i)=><button className="recognition-card" data-reveal key={n} onClick={()=>open(g)} style={{"--i":i} as CSSProperties}><span className="mono">{n}</span><h3>{t}</h3><p>{c}</p><b>FIND MY ROUTE ↗</b></button>)}</div></section>
@@ -82,6 +82,29 @@ export default function App(){
   <section className="process" id="process"><div className="section-head" data-reveal><span className="mono">06 / THE ROUTE</span><h2>A sales journey that behaves<br/><i>like a product.</i></h2></div><div className="process-rail">{[["01","Discover","Start with the outcome."],["02","Configure","Shape scope and requirements."],["03","Estimate","See investment and timeline."],["04","Review","Confirm the route and agreement."],["05","Book","Pay 2%; then initialize the project."]].map(([n,t,c],i)=><article key={n} data-reveal style={{"--i":i} as CSSProperties}><span className="mono">{n}</span><div/><h3>{t}</h3><p>{c}</p></article>)}</div></section>
 
   <section className="tools" id="tools"><div className="section-head split" data-reveal><div><span className="mono">07 / FREE TOOLS</span><h2>Useful enough to try<br/><i>before you buy.</i></h2></div><span className="mono">NO SIGN-UP / PREVIEW</span></div><div className="tool-list">{tools.map(([n,t,c],i)=><button key={n} data-reveal style={{"--i":i} as CSSProperties} onClick={()=>open()}><span className="mono">{n}</span><div><h3>{t}</h3><p>{c}</p></div><b>TRY IT ↗</b></button>)}</div></section><ToolsWorkbench requirement={liveRequirement} onStart={open}/>
+
+  <section className="proof-wall" id="proof">
+   <div className="section-head proof-wall-head" data-reveal><div><span className="mono">08 / PROOF WALL</span><h2>See the work.<br/><i>Not a stock mockup.</i></h2></div><span className="mono">LIVE / VERIFIED SOURCES</span></div>
+   <div className="proof-mosaic">
+    <a className="proof-photo proof-photo--hero" href="https://shashwataneja.com" target="_blank" rel="noreferrer" data-reveal>
+      <img src="https://shashwataneja.com/assets/og/shashwat-aneja-portfolio.png" alt="Shashwat Aneja portfolio visual" loading="lazy"/>
+      <span className="proof-caption"><span><b>01</b> SHASHWATANEJA.COM</span><em>LIVE SITE ↗</em></span>
+    </a>
+    <a className="proof-photo" href="https://github.com/Shashwat-Aneja/WIZARD-HomeAutomation" target="_blank" rel="noreferrer" data-reveal>
+      <img src="https://opengraph.githubassets.com/1/Shashwat-Aneja/WIZARD-HomeAutomation" alt="WIZARD Home Automation repository proof" loading="lazy"/>
+      <span className="proof-caption"><span><b>02</b> WIZARD / HARDWARE</span><em>REPOSITORY ↗</em></span>
+    </a>
+    <a className="proof-photo" href="https://github.com/Shashwat-Aneja/Xylo-business-automation-suite" target="_blank" rel="noreferrer" data-reveal>
+      <img src="https://opengraph.githubassets.com/1/Shashwat-Aneja/Xylo-business-automation-suite" alt="Xylo Business Automation Suite repository proof" loading="lazy"/>
+      <span className="proof-caption"><span><b>03</b> XYLO / AUTOMATION</span><em>REPOSITORY ↗</em></span>
+    </a>
+    <a className="proof-photo proof-photo--wide" href="https://github.com/Shashwat-Aneja/100-Days-of-Code-UPES" target="_blank" rel="noreferrer" data-reveal>
+      <img src="https://opengraph.githubassets.com/1/Shashwat-Aneja/100-Days-of-Code-UPES" alt="100 Days of Code UPES repository proof" loading="lazy"/>
+      <span className="proof-caption"><span><b>04</b> 100 DAYS / CODE</span><em>REPOSITORY ↗</em></span>
+    </a>
+   </div>
+   <p className="proof-wall-note" data-reveal><span className="mono">EVIDENCE STANDARD</span> Real work is shown from the public portfolio and repositories. No invented client logos, testimonials, stock-device mockups or fake performance numbers.</p>
+  </section>
 
   <section className="proof"><div className="section-head" data-reveal><span className="mono">08 / TRUST WITHOUT THEATRE</span><h2>Clarity is part of<br/><i>the product.</i></h2></div><div className="proof-grid">{[["Real capabilities","No invented client logos, testimonials or vanity numbers."],["Transparent starting points","Indicative ranges appear before booking."],["Technical handoff","Confirmed bookings can move into the dedicated dashboard."],["Human judgment","The system guides; the final scope is confirmed with you."]].map(([t,c],i)=><article key={t} data-reveal><span className="mono">0{i+1}</span><h3>{t}</h3><p>{c}</p></article>)}</div></section>
 
