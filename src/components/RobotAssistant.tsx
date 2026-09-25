@@ -1,7 +1,7 @@
 import {useEffect,useRef,useState,type CSSProperties,type PointerEvent as ReactPointerEvent} from "react";
-type Props={section?:string};
+type Props={section?:string;onOpenBuilder?:()=>void};
 const points=[{id:"top",label:"START",x:.86,y:.2},{id:"services",label:"SERVICES",x:.14,y:.38},{id:"discover",label:"DISCOVER",x:.82,y:.52},{id:"process",label:"PROCESS",x:.18,y:.67},{id:"tools",label:"TOOLS",x:.78,y:.8},{id:"contact",label:"BOOK",x:.2,y:.9}];
-export default function RobotAssistant({section="START"}:Props){
+export default function RobotAssistant({section="START",onOpenBuilder}:Props){
  const [pos,setPos]=useState({x:.86,y:.2}),[look,setLook]=useState({x:0,y:0}),[drag,setDrag]=useState(false),[label,setLabel]=useState(section),[state,setState]=useState("idle");
  const p=useRef(pos),target=useRef(pos),offset=useRef({x:0,y:0});
  useEffect(()=>{let raf=0;const tick=()=>{const a=p.current,b=target.current,e=drag?.22:.065,n={x:a.x+(b.x-a.x)*e,y:a.y+(b.y-a.y)*e};p.current=n;setPos(n);raf=requestAnimationFrame(tick)};raf=requestAnimationFrame(tick);return()=>cancelAnimationFrame(raf)},[drag]);
