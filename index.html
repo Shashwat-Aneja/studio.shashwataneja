@@ -660,6 +660,21 @@
 
     /* ---------- Responsive ---------- */
 
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+
     @media (max-width: 850px) {
       .hero {
         grid-template-columns: 1fr;
@@ -747,7 +762,7 @@
 
 <body>
 
-  <div class="progress" id="progress"></div>
+  <div class="progress" id="progress" role="progressbar" aria-label="Page scroll progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
 
   <nav>
     <a href="https://shashwataneja.com" class="brand">
@@ -1224,6 +1239,7 @@
         height > 0 ? (scrollTop / height) * 100 : 0;
 
       progress.style.width = percentage + "%";
+      progress.setAttribute("aria-valuenow", String(Math.round(percentage)));
     }
 
     window.addEventListener("scroll", updateProgress);
