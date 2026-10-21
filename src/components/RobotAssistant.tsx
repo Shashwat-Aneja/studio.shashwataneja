@@ -17,8 +17,8 @@ export default function RobotAssistant({section="ORIGIN",onOpenBuilder}:Props){
   const [look,setLook]=useState({x:0,y:0});
   const [drag,setDrag]=useState(false);
   const [hovered,setHovered]=useState(false);
-  const [label,setLabel]=useState(section);
   const [state,setState]=useState<RobotState>("idle");
+  void section;
   const p=useRef(pos),target=useRef(pos),offset=useRef({x:0,y:0});
 
   useEffect(()=>{
@@ -37,10 +37,10 @@ export default function RobotAssistant({section="ORIGIN",onOpenBuilder}:Props){
       setLook({x:Math.max(-1,Math.min(1,(e.clientX/innerWidth-.5)*2)),y:Math.max(-1,Math.min(1,(e.clientY/innerHeight-.5)*2))});
       if(drag){
         target.current={x:Math.min(.94,Math.max(.06,(e.clientX-offset.current.x)/innerWidth)),y:Math.min(.92,Math.max(.08,(e.clientY-offset.current.y)/innerHeight))};
-        setState("drag");setLabel("DROP ME");
+        setState("drag");
       }
     };
-    const up=()=>{if(drag){setDrag(false);setState("rest");setLabel("FOLLOWING");}};
+    const up=()=>{if(drag){setDrag(false);setState("rest");}};
     addEventListener("pointermove",move,{passive:true});addEventListener("pointerup",up);
     return()=>{removeEventListener("pointermove",move);removeEventListener("pointerup",up);};
   },[drag]);
@@ -54,11 +54,9 @@ export default function RobotAssistant({section="ORIGIN",onOpenBuilder}:Props){
       const point=points.find(item=>item.id===current.id);
       if(point){
         target.current={x:point.x,y:point.y};
-        setLabel(point.label);
         setState(current.id==="contact"?"celebrate":current.id==="tools"?"observing":"moving");
       }else{
         target.current={x:.5,y:.3};
-        setLabel("FOLLOWING");
         setState("idle");
       }
     };
@@ -70,7 +68,7 @@ export default function RobotAssistant({section="ORIGIN",onOpenBuilder}:Props){
     e.preventDefault();
     const rect=e.currentTarget.getBoundingClientRect();
     offset.current={x:e.clientX-(rect.left+rect.width/2),y:e.clientY-(rect.top+rect.height/2)};
-    setDrag(true);setState("drag");setLabel("DROP ME");
+    setDrag(true);setState("drag");
   };
 
   return <button type="button" className={`guide-robot is-${state}${hovered?" is-hovered":""}`} aria-label="Studio guide. Double-click to open the project builder; drag to reposition." onPointerDown={down} onPointerEnter={()=>{setHovered(true);if(!drag)setState("observing");}} onPointerLeave={()=>{setHovered(false);if(!drag)setState("idle");}} onDoubleClick={()=>onOpenBuilder?.()} style={{"--rx":`${pos.x*100}vw`,"--ry":`${pos.y*100}vh`,"--look-x":look.x,"--look-y":look.y} as CSSProperties}>
