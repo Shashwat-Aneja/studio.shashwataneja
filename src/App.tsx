@@ -85,29 +85,6 @@ export default function App(){
 
   <section className="tools" id="proof"><div className="section-head split" data-reveal><div><span className="mono">07 / SELECTED WORK</span><h2>Selected work.<br/><i>Built in the open.</i></h2></div><span className="mono">PUBLIC PROJECTS</span></div><div className="work-index"><a href="https://shashwataneja.com" target="_blank" rel="noreferrer"><span className="mono">01</span><strong>Personal portfolio</strong><span>Design / Front-end</span><b>VISIT ↗</b></a><a href="https://github.com/Shashwat-Aneja/WIZARD-HomeAutomation" target="_blank" rel="noreferrer"><span className="mono">02</span><strong>WIZARD</strong><span>Hardware / Automation</span><b>REPOSITORY ↗</b></a><a href="https://github.com/Shashwat-Aneja/Xylo-business-automation-suite" target="_blank" rel="noreferrer"><span className="mono">03</span><strong>Xylo</strong><span>Business software</span><b>REPOSITORY ↗</b></a><a href="https://github.com/Shashwat-Aneja/100-Days-of-Code-UPES" target="_blank" rel="noreferrer"><span className="mono">04</span><strong>100 Days of Code</strong><span>Programming / Practice</span><b>REPOSITORY ↗</b></a></div></section>
 
-  <section className="proof-wall" id="proof">
-   <div className="section-head proof-wall-head" data-reveal><div><span className="mono">08 / WORK</span><h2>Selected work.<br/><i>Built in the open.</i></h2></div><span className="mono">SELECTED PROJECTS</span></div>
-   <div className="proof-mosaic">
-    <a className="proof-photo proof-photo--hero" href="https://shashwataneja.com" target="_blank" rel="noreferrer" data-reveal>
-      <img src="https://shashwataneja.com/assets/og/shashwat-aneja-portfolio.png" alt="Shashwat Aneja portfolio visual" loading="lazy"/>
-      <span className="proof-caption"><span><b>01</b> SHASHWATANEJA.COM</span><em>LIVE SITE ↗</em></span>
-    </a>
-    <a className="proof-photo" href="https://github.com/Shashwat-Aneja/WIZARD-HomeAutomation" target="_blank" rel="noreferrer" data-reveal>
-      <img src="https://opengraph.githubassets.com/1/Shashwat-Aneja/WIZARD-HomeAutomation" alt="WIZARD Home Automation repository proof" loading="lazy"/>
-      <span className="proof-caption"><span><b>02</b> WIZARD / HARDWARE</span><em>REPOSITORY ↗</em></span>
-    </a>
-    <a className="proof-photo" href="https://github.com/Shashwat-Aneja/Xylo-business-automation-suite" target="_blank" rel="noreferrer" data-reveal>
-      <img src="https://opengraph.githubassets.com/1/Shashwat-Aneja/Xylo-business-automation-suite" alt="Xylo Business Automation Suite repository proof" loading="lazy"/>
-      <span className="proof-caption"><span><b>03</b> XYLO / AUTOMATION</span><em>REPOSITORY ↗</em></span>
-    </a>
-    <a className="proof-photo proof-photo--wide" href="https://github.com/Shashwat-Aneja/100-Days-of-Code-UPES" target="_blank" rel="noreferrer" data-reveal>
-      <img src="https://opengraph.githubassets.com/1/Shashwat-Aneja/100-Days-of-Code-UPES" alt="100 Days of Code UPES repository proof" loading="lazy"/>
-      <span className="proof-caption"><span><b>04</b> 100 DAYS / CODE</span><em>REPOSITORY ↗</em></span>
-    </a>
-   </div>
-   <p className="proof-wall-note" data-reveal><span className="mono">EVIDENCE STANDARD</span> Real work is shown from the public portfolio and repositories. No invented client logos, testimonials, stock-device mockups or fake performance numbers.</p>
-  </section>
-
   <section className="faq"><div className="section-head" data-reveal><span className="mono">09 / QUESTIONS</span><h2>Before you<br/><i>start building.</i></h2></div><div className="faq-list">{[["Do I need a technical brief?","No. Start with the outcome and Studio translates it into a route."],["Can I see pricing before booking?","Yes. The estimator calculates an indicative range and the 2% booking amount."],["Are third-party costs included?","No. Provider fees, taxes and other third-party charges stay separate."],["When is a project record created?","Only after a confirmed payment webhook. Browsing, estimation and blueprint generation do not create a permanent client/project record."]].map(([q,a],i)=><button key={q} onClick={()=>setFaq(faq===i?null:i)}><span className="mono">0{i+1}</span><div><h3>{q}</h3>{faq===i&&<p>{a}</p>}</div><b>{faq===i?"−":"+"}</b></button>)}</div></section>
 
   <section className="contact" id="contact"><div data-reveal><span className="mono">10 / CONTACT</span><h2>You have the idea.<br/><i>Let's shape the build.</i></h2><p>Bring a complete brief, a half-formed idea or simply a business problem. The Studio route starts there.</p><div className="contact-actions"><button className="hero-cta hero-cta--solid" onClick={()=>open()}>Build my project <span>↘</span></button><a className="hero-cta" href="mailto:studio@shashwataneja.com">Ask a question <span>↗</span></a></div></div><footer><span>SHASHWAT ANEJA / STUDIO</span><span>INDIA / ONLINE</span><span>2% BOOKING</span><a href="https://shashwataneja.com">PARENT ↗</a></footer></section>
