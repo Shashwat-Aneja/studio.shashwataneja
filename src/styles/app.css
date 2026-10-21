@@ -644,3 +644,11 @@ section{max-width:1440px;padding:clamp(78px,9vw,132px) clamp(20px,7vw,100px)!imp
 .legal-links a:hover{color:var(--accent)}
 .booking-errors{overflow-wrap:anywhere}
 @media(max-width:560px){.legal-links{grid-column:1/-1;gap:12px}.legal-links a{font-size:8px}}
+
+.builder-step-stack{display:grid;gap:25px}
+.builder-subsection>.mono{display:block;margin-bottom:10px;color:var(--muted)}
+.builder-toggle{display:flex;align-items:flex-start;gap:12px;padding:18px 0;border-top:1px solid var(--line);color:var(--ink)}
+.builder-toggle input{margin-top:4px;accent-color:var(--accent)}
+.builder-toggle span{display:grid;gap:5px}
+.builder-toggle strong{font-size:.92rem;font-weight:500}
+.builder-toggle small{color:var(--copy);font-size:.78rem;line-height:1.5}
