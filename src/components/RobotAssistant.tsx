@@ -23,15 +23,21 @@ export default function RobotAssistant({section="ORIGIN",onOpenBuilder}:Props){
   void section;
   const p=useRef(pos),target=useRef(pos),offset=useRef({x:0,y:0});
 
+  const raf=useRef<number|null>(null);
+  const animate=useRef<()=>void>(()=>{});
   useEffect(()=>{
-    let raf=0;
     const tick=()=>{
       const a=p.current,b=target.current,e=drag?.22:.045;
-      const n={x:a.x+(b.x-a.x)*e,y:a.y+(b.y-a.y)*e};
-      p.current=n;setPos(n);raf=requestAnimationFrame(tick);
+      const dx=b.x-a.x,dy=b.y-a.y;
+      if(Math.abs(dx)<.002&&Math.abs(dy)<.002){
+        p.current=b;setPos(b);raf.current=null;return;
+      }
+      const n={x:a.x+dx*e,y:a.y+dy*e};
+      p.current=n;setPos(n);raf.current=requestAnimationFrame(tick);
     };
-    raf=requestAnimationFrame(tick);
-    return()=>cancelAnimationFrame(raf);
+    animate.current=()=>{if(raf.current===null)raf.current=requestAnimationFrame(tick);};
+    animate.current();
+    return()=>{if(raf.current!==null)cancelAnimationFrame(raf.current);raf.current=null;};
   },[drag]);
 
   useEffect(()=>{
