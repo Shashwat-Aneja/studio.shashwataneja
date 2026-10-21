@@ -21,7 +21,7 @@ export function calculateEstimate(r:ProjectRequirement,selectedIds?:string[]):Es
  if(services.length>=2)discount=Math.max(discount,Math.min(.10,.05+(services.length-2)*.025));
  low=Math.max(4999,Math.round(low*(1-discount)/100)*100);high=Math.max(low,Math.round(high*(1-discount)/100)*100);
  const booking=Math.max(4999,Math.round(low*.02/100)*100);
- return{low,high,booking,discount,services,confidence:"indicative",notes:["Indicative range only; confirm detailed service pricing and scope before booking.","Third-party provider costs and taxes are separate.",Math.round(discount*100)+"% bundle/multi-service adjustment applied."]};
+ return{low,high,booking,discount,services,confidence:"indicative",notes:["Indicative base estimate for the primary service and selected modifiers; recommended add-ons may change the final quote.","Third-party provider costs and taxes are separate.",Math.round(discount*100)+"% bundle/multi-service adjustment applied."]};
 }
 
 export type BudgetFit="within"|"below"|"over";
