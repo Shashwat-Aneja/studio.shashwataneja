@@ -14,6 +14,8 @@ describe("indicative pricing",()=>{
     const withPayments=calculateEstimate({...defaultRequirement,features:["Payments"]});
     expect(withPayments.low).toBeGreaterThan(baseline.low);
     expect(withPayments.high).toBeGreaterThan(baseline.high);
+    const withIntegration=calculateEstimate({...defaultRequirement,integrations:["payments"]});
+    expect(withIntegration.low).toBeGreaterThan(baseline.low);
   });
   it("reflects design depth, content, SEO and infrastructure choices",()=>{
     const lean={...defaultRequirement,designLevel:"focused" as const,contentRequirement:"provided" as const,infrastructureRequirement:false,seoRequirement:"none" as const};
