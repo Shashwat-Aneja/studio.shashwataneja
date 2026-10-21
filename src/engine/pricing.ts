@@ -13,7 +13,12 @@ export function calculateEstimate(r:ProjectRequirement,selectedIds?:string[]):Es
  const services=ids.map(id=>serviceCatalog.find(s=>s.id===id)).filter(Boolean) as ServiceItem[];
  let low=services.reduce((s,x)=>s+x.range[0],0),high=services.reduce((s,x)=>s+x.range[1],0);
  const scaleFactor=r.scale==="lean"?.9:r.scale==="advanced"?1.35:1;low*=scaleFactor;high*=scaleFactor;
+ const designFactor=r.designLevel==="focused"?.9:r.designLevel==="signature"?1.25:1;low*=designFactor;high*=designFactor;
  for(const feature of r.features){const range=featureRanges[feature];if(range){low+=range[0];high+=range[1];}}
+ if(r.contentRequirement==="assisted"){low+=1500;high+=4000;}else if(r.contentRequirement==="full"){low+=5000;high+=12000;}
+ if(r.infrastructureRequirement){low+=1500;high+=4000;}
+ if(r.seoRequirement==="foundation"){low+=3000;high+=8000;}else if(r.seoRequirement==="growth"){low+=7000;high+=18000;}
+ if(r.automationRequirement==="light"){low+=2500;high+=7000;}else if(r.automationRequirement==="advanced"){low+=10000;high+=25000;}
  low+=r.integrations.length*pricingRules.extraIntegration;high+=r.integrations.length*pricingRules.extraIntegration*1.5;
  if(r.deliverySpeed!=="standard"){const m=r.deliverySpeed==="rush"?pricingRules.rush:pricingRules.priority;low*=m;high*=m;}
  let discount=0;
@@ -21,7 +26,7 @@ export function calculateEstimate(r:ProjectRequirement,selectedIds?:string[]):Es
  if(services.length>=2)discount=Math.max(discount,Math.min(.10,.05+(services.length-2)*.025));
  low=Math.max(4999,Math.round(low*(1-discount)/100)*100);high=Math.max(low,Math.round(high*(1-discount)/100)*100);
  const booking=Math.max(4999,Math.round(low*.02/100)*100);
- return{low,high,booking,discount,services,confidence:"indicative",notes:["Indicative base estimate for the primary service and selected modifiers; recommended add-ons may change the final quote.","Third-party provider costs and taxes are separate.",Math.round(discount*100)+"% bundle/multi-service adjustment applied."]};
+ return{low,high,booking,discount,services,confidence:"indicative",notes:["Indicative base estimate for the primary service and selected modifiers; recommended add-ons may change the final quote.","Third-party provider costs and taxes are separate.","Design level: "+r.designLevel+". Content support: "+r.contentRequirement+".","Infrastructure: "+(r.infrastructureRequirement?"included as an estimate modifier":"not selected")+". SEO: "+r.seoRequirement+". Automation: "+r.automationRequirement+".",Math.round(discount*100)+"% bundle/multi-service adjustment applied."]};
 }
 
 export type BudgetFit="within"|"below"|"over";
