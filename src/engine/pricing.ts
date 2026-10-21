@@ -23,3 +23,14 @@ export function calculateEstimate(r:ProjectRequirement,selectedIds?:string[]):Es
  const booking=Math.max(4999,Math.round(low*.02/100)*100);
  return{low,high,booking,discount,services,confidence:"indicative",notes:["Indicative range only; confirm detailed service pricing and scope before booking.","Third-party provider costs and taxes are separate.",Math.round(discount*100)+"% bundle/multi-service adjustment applied."]};
 }
+
+export type BudgetFit="within"|"below"|"over";
+const budgetBounds:Record<ProjectRequirement["budgetRange"],readonly [number,number]>={
+ "under-10k":[0,10000],"10-25k":[10000,25000],"25-50k":[25000,50000],"50-100k":[50000,100000],"100k-plus":[100000,Number.POSITIVE_INFINITY]
+};
+export function assessBudgetFit(estimate:Estimate,budget:ProjectRequirement["budgetRange"]):BudgetFit{
+ const [minimum,maximum]=budgetBounds[budget];
+ if(estimate.low>maximum)return "over";
+ if(estimate.high<minimum)return "below";
+ return "within";
+}
