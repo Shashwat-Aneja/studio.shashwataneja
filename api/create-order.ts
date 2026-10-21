@@ -1,5 +1,6 @@
 import { randomUUID } from "node:crypto";
 import { createBlueprint } from "../src/engine/blueprint";
+import { serviceCatalog } from "../src/data/catalog";
 
 const json = (res: any, status: number, body: unknown) => {
   res.statusCode = status;
