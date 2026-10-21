@@ -1,7 +1,8 @@
 import {useEffect,useMemo,useState,type CSSProperties} from "react";
 import "./styles/app.css";
 import {serviceCategories} from "./data/services";
-import {formatINR} from "./data/pricing";\nimport {assessBudgetFit} from "./engine/pricing";
+import {formatINR} from "./data/pricing";
+import {assessBudgetFit} from "./engine/pricing";
 import {defaultRequirement,type ProjectGoal,type ProjectScale, type DeliverySpeed, type ProjectRequirement} from "./engine/requirements";
 import {createBlueprint} from "./engine/blueprint";
 import {recommendServices} from "./engine/recommendation";
