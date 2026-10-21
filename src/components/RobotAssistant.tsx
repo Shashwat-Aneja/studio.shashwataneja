@@ -56,7 +56,7 @@ export default function RobotAssistant({section="ORIGIN",onOpenBuilder}:Props){
       const point=points.find(item=>item.id===current.id);
       if(point){
         target.current={x:point.x,y:point.y};
-        setState(current.id==="contact"?"celebrate":current.id==="tools"?"observing":"moving");
+        setState(current.id==="contact"?"celebrate":current.id==="proof"?"observing":"moving");
       }else{
         target.current={x:.5,y:.3};
         setState("idle");
