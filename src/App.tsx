@@ -60,6 +60,24 @@ export default function App(){
  },[]);
  useEffect(()=>{const s=()=>document.documentElement.style.setProperty("--scroll-progress",Math.min(100,scrollY/(document.documentElement.scrollHeight-innerHeight)*100)+"%");addEventListener("scroll",s,{passive:true});s();return()=>removeEventListener("scroll",s)},[]);
 
+
+ useEffect(()=>{
+   if(!builderOpen&&!bookingOpen)return;
+   const previousOverflow=document.body.style.overflow;
+   document.body.style.overflow="hidden";
+   const onKeyDown=(event:KeyboardEvent)=>{
+     if(event.key==="Escape"){
+       if(bookingOpen)setBookingOpen(false);
+       else if(builderOpen)setBuilderOpen(false);
+     }
+   };
+   addEventListener("keydown",onKeyDown);
+   return()=>{
+     removeEventListener("keydown",onKeyDown);
+     document.body.style.overflow=previousOverflow;
+   };
+ },[builderOpen,bookingOpen]);
+
  const open=(goal?:ProjectGoal)=>{setRequirement(r=>({...r,goal:goal??r.goal}));setSelectedFeatures([]);setStep(1);setBlueprintOpen(false);setBlueprintReveal(false);setBuilderOpen(true)};
  const update=(patch:Partial<ProjectRequirement>)=>setRequirement(r=>({...r,...patch}));
  const toggleFeature=(f:string)=>setSelectedFeatures(v=>v.includes(f)?v.filter(x=>x!==f):[...v,f]);
@@ -78,7 +96,7 @@ export default function App(){
 
   <section className="workshop" id="workshop"><div className="workshop-copy" data-reveal><span className="mono">04 / THE WORKSHOP</span><h2>Don't know the service?<br/><i>Build the answer.</i></h2><p>Studio asks the useful questions first: outcome, audience, scale, features, experience, speed and investment. Then it turns the answers into a project blueprint.</p><button className="hero-cta hero-cta--solid" onClick={()=>open()}>Open the workshop <span>↘</span></button></div><div className="workshop-visual" data-reveal><div className="workshop-screen"><span className="mono">LIVE SCOPE ENGINE</span><strong>{formatINR(blueprint.estimate.low)}</strong><small>— {formatINR(blueprint.estimate.high)}</small><div className="scope-lines"><i/><i/><i/><i/></div></div><div className="floating-chip chip-one">REQUIREMENTS</div><div className="floating-chip chip-two">SCOPE</div><div className="floating-chip chip-three">BLUEPRINT</div></div></section>
 
-  <section className="estimate" id="estimate"><div data-reveal><span className="mono">05 / PRICE CONFIDENCE</span><h2>Know the shape of the investment <i>before the sales call.</i></h2><p>Indicative ranges are calculated from the current requirement model. Third-party costs and taxes stay separate.</p></div><div className="estimate-card" data-reveal><span className="mono">LIVE PROJECT RANGE</span><strong>{formatINR(blueprint.estimate.low)} <i>— {formatINR(blueprint.estimate.high)}</i></strong><div><span>2% booking</span><b>{formatINR(blueprint.estimate.booking)}</b></div><small>{requirement.goal} / {requirement.scale} / {requirement.deliverySpeed} / {selectedFeatures.length} feature modifiers</small></div></section>
+  <section className="estimate" id="estimate"><div data-reveal><span className="mono">05 / PRICE CONFIDENCE</span><h2>Know the shape of the investment <i>before the sales call.</i></h2><p>These are provisional ranges from the current requirement model, not a final quote. Detailed service pricing will be confirmed before launch. Third-party costs and taxes stay separate.</p></div><div className="estimate-card" data-reveal><span className="mono">LIVE PROJECT RANGE</span><strong>{formatINR(blueprint.estimate.low)} <i>— {formatINR(blueprint.estimate.high)}</i></strong><div><span>2% booking</span><b>{formatINR(blueprint.estimate.booking)}</b></div><small>{requirement.goal} / {requirement.scale} / {requirement.deliverySpeed} / {selectedFeatures.length} feature modifiers</small></div></section>
 
   <section className="process" id="process"><div className="section-head" data-reveal><span className="mono">06 / THE ROUTE</span><h2>A sales journey that behaves<br/><i>like a product.</i></h2></div><div className="process-rail">{[["01","Discover","Start with the outcome."],["02","Configure","Shape scope and requirements."],["03","Estimate","See investment and timeline."],["04","Review","Confirm the route and agreement."],["05","Book","Pay 2%; then initialize the project."]].map(([n,t,c],i)=><article key={n} data-reveal style={{"--i":i} as CSSProperties}><span className="mono">{n}</span><div/><h3>{t}</h3><p>{c}</p></article>)}</div></section>
 
@@ -113,8 +131,8 @@ export default function App(){
 
   <section className="contact" id="contact"><div data-reveal><span className="mono">10 / START HERE</span><h2>You have the idea.<br/><i>Let's shape the build.</i></h2><p>Bring a complete brief, a half-formed idea or simply a business problem. The Studio route starts there.</p><div className="contact-actions"><button className="hero-cta hero-cta--solid" onClick={()=>open()}>Build my project <span>↘</span></button><a className="hero-cta" href="mailto:studio@shashwataneja.com">Ask a question <span>↗</span></a></div></div><footer><span>SHASHWAT ANEJA / STUDIO</span><span>INDIA / ONLINE</span><span>2% BOOKING</span><a href="https://shashwataneja.com">PARENT ↗</a></footer></section>
 
-  {builderOpen&&<div className="builder-backdrop" onMouseDown={e=>e.target===e.currentTarget&&setBuilderOpen(false)}><section className="builder-panel" role="dialog" aria-modal="true">
-   <div className="builder-head"><div><span className="mono">WORKSHOP / {String(step).padStart(2,"0")} OF 07</span><h2>{step===1?"What are you trying to achieve?":step===2?"Who is this for?":step===3?"How much build do you need?":step===4?"What should it include?":step===5?"How should it feel?":step===6?"How quickly do you need it?":"What should we build around?"}</h2></div><button onClick={()=>setBuilderOpen(false)}>×</button></div>
+  {builderOpen&&<div className="builder-backdrop" onMouseDown={e=>e.target===e.currentTarget&&setBuilderOpen(false)}><section className="builder-panel" role="dialog" aria-modal="true" aria-labelledby="workshop-dialog-title">
+   <div className="builder-head"><div><span className="mono">WORKSHOP / {String(step).padStart(2,"0")} OF 07</span><h2 id="workshop-dialog-title">{step===1?"What are you trying to achieve?":step===2?"Who is this for?":step===3?"How much build do you need?":step===4?"What should it include?":step===5?"How should it feel?":step===6?"How quickly do you need it?":"What should we build around?"}</h2></div><button onClick={()=>setBuilderOpen(false)}>×</button></div>
    <div className="builder-progress"><span style={{width:(step/7*100)+"%"}}/></div>
    {step===1&&<div className="builder-options">{outcomes.map(([n,t,c,g])=><button key={g} className={requirement.goal===g?"active":""} onClick={()=>update({goal:g})}><span className="mono">{n}</span><div><strong>{t}</strong><small>{c}</small></div><b>↗</b></button>)}</div>}
    {step===2&&<div className="builder-options three">{[["personal","Personal"],["business","Business"],["customers","Customers"],["internal","Internal team"],["mixed","Mixed audience"]].map(([v,t])=><button key={v} className={requirement.audience===v?"active":""} onClick={()=>update({audience:v as ProjectRequirement["audience"]})}><strong>{t}</strong><small>Shape the audience assumption.</small></button>)}</div>}
