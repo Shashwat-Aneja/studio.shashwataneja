@@ -8,7 +8,9 @@ const points=[
   {id:"services",label:"PROJECTS",x:.78,y:.22},
   {id:"workshop",label:"WORKSHOP / THINK",x:.3,y:.72},
   {id:"process",label:"JOURNEY",x:.74,y:.64},
-  {id:"tools",label:"LAB / EXPERIMENT",x:.2,y:.55},
+  {id:"proof",label:"SELECTED WORK",x:.2,y:.55},
+  {id:"estimate",label:"ESTIMATE",x:.5,y:.78},
+  {id:"faq",label:"QUESTIONS",x:.84,y:.72},
   {id:"contact",label:"EDGE / CONNECT",x:.82,y:.42}
 ];
 
