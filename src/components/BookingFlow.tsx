@@ -1,12 +1,17 @@
 import {useMemo,useState} from "react";
-import type {ProjectBlueprint} from "../engine/blueprint";\nimport type {ProjectRequirement} from "../engine/requirements";
+import type {ProjectBlueprint} from "../engine/blueprint";
+import type {ProjectRequirement} from "../engine/requirements";
 import {createBookingSummary,validateBooking,type BookingDraft} from "../engine/booking";
 import {formatINR} from "../data/pricing";
 
-type Props={blueprint:ProjectBlueprint;requirement:ProjectRequirement;onClose:()=>void};\n\ndeclare global { interface Window { Razorpay?: new (options: Record<string, any>) => { open: () => void } } }
+type Props={blueprint:ProjectBlueprint;requirement:ProjectRequirement;onClose:()=>void};
+
+declare global { interface Window { Razorpay?: new (options: Record<string, any>) => { open: () => void } } }
 
 export default function BookingFlow({blueprint,requirement,onClose}:Props){
- const [stage,setStage]=useState<"review"|"details"|"agreement"|"payment"|"submitted">("review");\n const [paymentError,setPaymentError]=useState("");\n const [paymentPending,setPaymentPending]=useState(false);
+ const [stage,setStage]=useState<"review"|"details"|"agreement"|"payment"|"submitted">("review");
+ const [paymentError,setPaymentError]=useState("");
+ const [paymentPending,setPaymentPending]=useState(false);
  const [draft,setDraft]=useState<BookingDraft>({blueprint,name:"",email:"",phone:"",notes:"",agreementAccepted:false});
  const errors=useMemo(()=>validateBooking(draft),[draft]);
  const contactErrors=useMemo(()=>errors.filter(error=>error!=="Agreement acceptance is required before payment."),[errors]);
