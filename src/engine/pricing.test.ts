@@ -15,6 +15,13 @@ describe("indicative pricing",()=>{
     expect(withPayments.low).toBeGreaterThan(baseline.low);
     expect(withPayments.high).toBeGreaterThan(baseline.high);
   });
+  it("reflects design depth, content, SEO and infrastructure choices",()=>{
+    const lean={...defaultRequirement,designLevel:"focused" as const,contentRequirement:"provided" as const,infrastructureRequirement:false,seoRequirement:"none" as const};
+    const standard=calculateEstimate(defaultRequirement);
+    const reduced=calculateEstimate(lean);
+    expect(standard.low).toBeGreaterThan(reduced.low);
+    expect(standard.high).toBeGreaterThan(reduced.high);
+  });
   it("assesses whether an estimate overlaps the selected budget band",()=>{
     expect(assessBudgetFit({low:12000,high:22000,booking:4999,discount:0,services:[],notes:[],confidence:"indicative"},"10-25k")).toBe("within");
     expect(assessBudgetFit({low:30000,high:40000,booking:4999,discount:0,services:[],notes:[],confidence:"indicative"},"10-25k")).toBe("over");
