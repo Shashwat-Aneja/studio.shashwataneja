@@ -30,5 +30,5 @@ export function validateBooking(draft:BookingDraft):string[]{
 }
 
 export function createBookingSummary(draft:BookingDraft):BookingSummary{
- return {status:"payment",bookingAmount:draft.blueprint.estimate.booking,message:"Your booking is ready for payment. Confirmation is only issued after the payment provider webhook verifies the transaction."};
+ return {status:"payment",bookingAmount:draft.blueprint.estimate.booking,message:"Your booking details are ready. Secure checkout is available only when Studio has enabled payments; project confirmation requires a verified provider webhook."};
 }
