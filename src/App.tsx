@@ -81,8 +81,7 @@ export default function App(){
  const update=(patch:Partial<ProjectRequirement>)=>setRequirement(r=>({...r,...patch}));
  const toggleFeature=(f:string)=>setSelectedFeatures(v=>v.includes(f)?v.filter(x=>x!==f):[...v,f]);
  const toggleIntegration=(id:string)=>setRequirement(r=>({...r,integrations:r.integrations.includes(id)?r.integrations.filter(x=>x!==id):[...r.integrations,id]}));
- const copyBrief=()=>{const text=[blueprint.title,blueprint.objective,"Estimate: "+formatINR(blueprint.estimate.low)+" — "+formatINR(blueprint.estimate.high),"Provisional booking: "+formatINR(blueprint.estimate.booking),"Timeline: "+blueprint.timeline.reduce((total,phase)=>total+phase.duration,0)+" days",...blueprint.summary,...blueprint.recommendations.map(x=>x.serviceId+": "+x.reason),"Timeline phases:",...blueprint.timeline.map(x=>x.name+": "+x.duration+" days"),"Notes: "+blueprint.estimate.notes.join(" ")].join("
-");void navigator.clipboard.writeText(text).then(()=>setBriefCopied(true)).catch(()=>setBriefCopied(false));};
+ const copyBrief=()=>{const text=[blueprint.title,blueprint.objective,"Estimate: "+formatINR(blueprint.estimate.low)+" — "+formatINR(blueprint.estimate.high),"Provisional booking: "+formatINR(blueprint.estimate.booking),"Timeline: "+blueprint.timeline.reduce((total,phase)=>total+phase.duration,0)+" days",...blueprint.summary,...blueprint.recommendations.map(x=>x.serviceId+": "+x.reason),"Timeline phases:",...blueprint.timeline.map(x=>x.name+": "+x.duration+" days"),"Notes: "+blueprint.estimate.notes.join(" ")].join("\n");void navigator.clipboard.writeText(text).then(()=>setBriefCopied(true)).catch(()=>setBriefCopied(false));};
  const catGoal=(id:string):ProjectGoal=>id==="commerce"?"commerce":id==="application"?"application":id==="branding"||id==="design"?"brand":id==="growth"||id==="content"?"growth":id==="automation"||id==="launch"||id==="care"?"technical":"presence";
 
  return <main className="studio-site">
