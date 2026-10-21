@@ -30,7 +30,8 @@ export default function App(){
  const [blueprintOpen,setBlueprintOpen]=useState(false);
  const [blueprintReveal,setBlueprintReveal]=useState(false);
  const [bookingOpen,setBookingOpen]=useState(false);
- const [mobileMenuOpen,setMobileMenuOpen]=useState(false);\n const [briefCopied,setBriefCopied]=useState(false);
+ const [mobileMenuOpen,setMobileMenuOpen]=useState(false);
+ const [briefCopied,setBriefCopied]=useState(false);
 
  const active=useMemo(()=>serviceCategories.find(c=>c.id===activeCategory)??serviceCategories[0],[activeCategory]);
  const liveRequirement=useMemo(()=>({...requirement,features:selectedFeatures}),[requirement,selectedFeatures]);
@@ -64,7 +65,8 @@ export default function App(){
  const open=(goal?:ProjectGoal)=>{setRequirement(r=>({...r,goal:goal??r.goal}));setSelectedFeatures([]);setStep(1);setBlueprintOpen(false);setBlueprintReveal(false);setBuilderOpen(true)};
  const update=(patch:Partial<ProjectRequirement>)=>setRequirement(r=>({...r,...patch}));
  const toggleFeature=(f:string)=>setSelectedFeatures(v=>v.includes(f)?v.filter(x=>x!==f):[...v,f]);
- const copyBrief=()=>{const text=[blueprint.title,blueprint.objective,"Estimate: "+formatINR(blueprint.estimate.low)+" — "+formatINR(blueprint.estimate.high),"Provisional booking: "+formatINR(blueprint.estimate.booking),"Timeline: "+blueprint.timeline.reduce((total,phase)=>total+phase.duration,0)+" days",...blueprint.summary,...blueprint.recommendations.map(x=>x.serviceId+": "+x.reason),"Timeline phases:",...blueprint.timeline.map(x=>x.name+": "+x.duration+" days"),"Notes: "+blueprint.estimate.notes.join(" ")].join("\n");void navigator.clipboard.writeText(text).then(()=>setBriefCopied(true)).catch(()=>setBriefCopied(false));};\n const catGoal=(id:string):ProjectGoal=>id==="commerce"?"commerce":id==="application"?"application":id==="branding"?"brand":id==="growth"?"growth":id==="automation"?"technical":"presence";
+ const copyBrief=()=>{const text=[blueprint.title,blueprint.objective,"Estimate: "+formatINR(blueprint.estimate.low)+" — "+formatINR(blueprint.estimate.high),"Provisional booking: "+formatINR(blueprint.estimate.booking),"Timeline: "+blueprint.timeline.reduce((total,phase)=>total+phase.duration,0)+" days",...blueprint.summary,...blueprint.recommendations.map(x=>x.serviceId+": "+x.reason),"Timeline phases:",...blueprint.timeline.map(x=>x.name+": "+x.duration+" days"),"Notes: "+blueprint.estimate.notes.join(" ")].join("\n");void navigator.clipboard.writeText(text).then(()=>setBriefCopied(true)).catch(()=>setBriefCopied(false));};
+ const catGoal=(id:string):ProjectGoal=>id==="commerce"?"commerce":id==="application"?"application":id==="branding"?"brand":id==="growth"?"growth":id==="automation"?"technical":"presence";
 
  return <main className="studio-site">
   <header className="site-nav"><a className="wordmark" href="#top" onClick={()=>setMobileMenuOpen(false)}>SA<span>/</span>STUDIO</a><nav className={mobileMenuOpen?"is-open":""} aria-label="Main navigation"><a href="#services" onClick={()=>setMobileMenuOpen(false)}>Services</a><a href="#workshop" onClick={()=>setMobileMenuOpen(false)}>Workshop</a><a href="#process" onClick={()=>setMobileMenuOpen(false)}>Process</a><a href="#proof" onClick={()=>setMobileMenuOpen(false)}>Work</a><a href="#contact" onClick={()=>setMobileMenuOpen(false)}>Start</a></nav><div className="nav-controls"><button className="mobile-menu-toggle" type="button" aria-expanded={mobileMenuOpen} aria-label={mobileMenuOpen?"Close navigation":"Open navigation"} onClick={()=>setMobileMenuOpen(v=>!v)}>{mobileMenuOpen?"CLOSE":"MENU"} <span>{mobileMenuOpen?"−":"+"}</span></button><ThemeToggle mode={theme} onChange={setTheme}/></div></header>
