@@ -107,6 +107,6 @@ export default function App(){
    </>)}
    <div className="builder-footer"><button className="text-action" onClick={()=>step>1?setStep(step-1):setBuilderOpen(false)}>{step>1?"Back":"Close"} ↖</button>{step<7?<button className="hero-cta hero-cta--solid" onClick={()=>setStep(step+1)}>Continue ↘</button>:<button className="hero-cta hero-cta--solid" onClick={()=>{setBlueprintOpen(true);setBlueprintReveal(true);}}>Generate blueprint ↘</button>}</div>
   </section></div>}
-  {bookingOpen&&<BookingFlow blueprint={blueprint} onClose={()=>setBookingOpen(false)}/>}
+  {bookingOpen&&<BookingFlow blueprint={blueprint} requirement={liveRequirement} onClose={()=>setBookingOpen(false)}/>}
  </main>;
 }
