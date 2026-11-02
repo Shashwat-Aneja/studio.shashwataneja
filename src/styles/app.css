@@ -738,3 +738,5 @@ section{max-width:1440px;padding:clamp(78px,9vw,132px) clamp(20px,7vw,100px)!imp
  .hero-slide{animation:none}
  .hero-slide-controls button{transition:none}
 }
+
+.hero{isolation:isolate}
