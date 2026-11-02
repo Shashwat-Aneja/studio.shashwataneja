@@ -740,3 +740,20 @@ section{max-width:1440px;padding:clamp(78px,9vw,132px) clamp(20px,7vw,100px)!imp
 }
 
 .hero{isolation:isolate}
+
+
+/* Service panel contrast correction: photography stays dark, typography stays legible in every theme. */
+.service-canvas{color:#f4f0e9!important}
+.service-canvas>span,.service-canvas h3,.service-canvas .text-action{color:#f4f0e9!important}
+.service-canvas p{color:rgba(244,240,233,.82)!important}
+.service-canvas .service-tags span{color:rgba(244,240,233,.9)!important;border-color:rgba(244,240,233,.3)!important;background:rgba(8,9,12,.22)}
+.service-canvas .service-tags span:hover{border-color:rgba(244,240,233,.75)!important}
+.service-canvas .text-action{border-color:rgba(244,240,233,.5)!important}
+.service-canvas .text-action:hover{color:#fff!important;border-color:#fff!important}
+.service-canvas:before{background:linear-gradient(90deg,rgba(5,6,9,.76),rgba(5,6,9,.48) 58%,rgba(5,6,9,.2))!important}
+.service-canvas h3{text-shadow:0 2px 22px rgba(0,0,0,.25)}
+@media(max-width:650px){
+ .service-canvas{padding:34px 24px!important}
+ .service-canvas h3{margin-top:72px!important}
+ .service-canvas .service-tags{max-width:100%}
+}
