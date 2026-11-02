@@ -3,11 +3,11 @@ import {assessBudgetFit,calculateEstimate} from "./pricing";
 import {defaultRequirement} from "./requirements";
 
 describe("indicative pricing",()=>{
-  it("returns an ordered estimate with the configured booking floor",()=>{
+  it("returns an ordered estimate with a credited 2 percent booking amount",()=>{
     const estimate=calculateEstimate(defaultRequirement);
     expect(estimate.low).toBeGreaterThanOrEqual(4999);
     expect(estimate.high).toBeGreaterThanOrEqual(estimate.low);
-    expect(estimate.booking).toBeGreaterThanOrEqual(4999);
+    expect(estimate.booking).toBe(Math.round(estimate.low*.02/100)*100);
   });
   it("prices selected features as scoped add-ons instead of generic page fees",()=>{
     const baseline=calculateEstimate(defaultRequirement);
