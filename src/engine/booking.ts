@@ -25,10 +25,10 @@ export function validateBooking(draft:BookingDraft):string[]{
  else if(draft.phone.replace(/\D/g,"").length<7||draft.phone.replace(/\D/g,"").length>15) errors.push("Enter a valid phone number.");
  if(draft.notes.length>2000) errors.push("Notes must be 2,000 characters or fewer.");
  if(!draft.agreementAccepted) errors.push("Agreement acceptance is required before payment.");
- if(draft.blueprint.estimate.booking<4999) errors.push("Booking amount is below the configured minimum.");
+
  return errors;
 }
 
 export function createBookingSummary(draft:BookingDraft):BookingSummary{
- return {status:"payment",bookingAmount:draft.blueprint.estimate.booking,message:"Your booking details are ready. Secure checkout is available only when Studio has enabled payments; project confirmation requires a verified provider webhook."};
+ return {status:"payment",bookingAmount:draft.blueprint.estimate.booking,message:"The displayed 2% is an illustrative booking estimate based on the current scope range. The actual booking amount is calculated as 2% of the final written quotation and credited towards the project total. Secure checkout remains unavailable until Studio enables payments."};
 }
