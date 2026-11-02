@@ -25,7 +25,7 @@ export function calculateEstimate(r:ProjectRequirement,selectedIds?:string[]):Es
  if(services.length>=3)discount=Math.min(.15,.05+(services.length-3)*.025);
  if(services.length>=2)discount=Math.max(discount,Math.min(.10,.05+(services.length-2)*.025));
  low=Math.max(4999,Math.round(low*(1-discount)/100)*100);high=Math.max(low,Math.round(high*(1-discount)/100)*100);
- const booking=Math.round(low*.02/100)*100;
+ const booking=Math.round(low*.02);
  return{low,high,booking,discount,services,confidence:"indicative",notes:["Indicative custom-project estimate only. The final fixed quotation determines the actual 2% booking payment.","Third-party provider costs and taxes are separate.","Design level: "+r.designLevel+". Content support: "+r.contentRequirement+".","Infrastructure: "+(r.infrastructureRequirement?"included as an estimate modifier":"not selected")+". SEO: "+r.seoRequirement+". Automation: "+r.automationRequirement+".",Math.round(discount*100)+"% bundle/multi-service adjustment applied."]};
 }
 
