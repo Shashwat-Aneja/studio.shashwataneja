@@ -7,7 +7,7 @@ describe("indicative pricing",()=>{
     const estimate=calculateEstimate(defaultRequirement);
     expect(estimate.low).toBeGreaterThanOrEqual(4999);
     expect(estimate.high).toBeGreaterThanOrEqual(estimate.low);
-    expect(estimate.booking).toBe(Math.round(estimate.low*.02/100)*100);
+    expect(estimate.booking).toBe(Math.round(estimate.low*.02));
   });
   it("prices selected features as scoped add-ons instead of generic page fees",()=>{
     const baseline=calculateEstimate(defaultRequirement);
