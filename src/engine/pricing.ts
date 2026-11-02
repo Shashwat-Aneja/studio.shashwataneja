@@ -1,6 +1,6 @@
 import {serviceCatalog,type ServiceItem} from "../data/catalog";
 import type {ProjectRequirement} from "./requirements";
-export const pricingRules={rush:1.20,priority:1.25,minimumBooking:4999,bookingRate:0.02,extraIntegration:2499,bundleDiscount:[0.05,0.15] as const,multiServiceDiscount:[0.05,0.10] as const};
+export const pricingRules={rush:1.20,priority:1.25,bookingRate:0.02,extraIntegration:2499,bundleDiscount:[0.05,0.15] as const,multiServiceDiscount:[0.05,0.10] as const};
 export type Estimate={low:number;high:number;booking:number;discount:number;services:ServiceItem[];notes:string[];confidence:"indicative"};
 const featureRanges:Record<string,readonly [number,number]>={
  "CMS":[5000,12000],"Blog":[3000,8000],"Booking":[5000,12000],"Payments":[5000,12000],
@@ -25,8 +25,8 @@ export function calculateEstimate(r:ProjectRequirement,selectedIds?:string[]):Es
  if(services.length>=3)discount=Math.min(.15,.05+(services.length-3)*.025);
  if(services.length>=2)discount=Math.max(discount,Math.min(.10,.05+(services.length-2)*.025));
  low=Math.max(4999,Math.round(low*(1-discount)/100)*100);high=Math.max(low,Math.round(high*(1-discount)/100)*100);
- const booking=Math.max(4999,Math.round(low*.02/100)*100);
- return{low,high,booking,discount,services,confidence:"indicative",notes:["Indicative base estimate for the primary service and selected modifiers; recommended add-ons may change the final quote.","Third-party provider costs and taxes are separate.","Design level: "+r.designLevel+". Content support: "+r.contentRequirement+".","Infrastructure: "+(r.infrastructureRequirement?"included as an estimate modifier":"not selected")+". SEO: "+r.seoRequirement+". Automation: "+r.automationRequirement+".",Math.round(discount*100)+"% bundle/multi-service adjustment applied."]};
+ const booking=Math.round(low*.02/100)*100;
+ return{low,high,booking,discount,services,confidence:"indicative",notes:["Indicative custom-project estimate only. The final fixed quotation determines the actual 2% booking payment.","Third-party provider costs and taxes are separate.","Design level: "+r.designLevel+". Content support: "+r.contentRequirement+".","Infrastructure: "+(r.infrastructureRequirement?"included as an estimate modifier":"not selected")+". SEO: "+r.seoRequirement+". Automation: "+r.automationRequirement+".",Math.round(discount*100)+"% bundle/multi-service adjustment applied."]};
 }
 
 export type BudgetFit="within"|"below"|"over";
