@@ -51,14 +51,34 @@ const services:Service[]=[
  ]}
 ];
 
+const serviceVisuals:Record<string,string>={
+ "Web Development":"https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1800&q=85",
+ "UI/UX & Design":"https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=1800&q=85",
+ "Branding":"https://images.unsplash.com/photo-1558655146-9f40138edfeb?auto=format&fit=crop&w=1800&q=85",
+ "Content":"https://images.unsplash.com/photo-1455390582262-044cbyte?auto=format&fit=crop&w=1800&q=85",
+ "Launch & Infrastructure":"https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1800&q=85",
+ "SEO & Growth":"https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1800&q=85",
+ "E-commerce":"https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=1800&q=85",
+ "Automation":"https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1800&q=85",
+ "Care":"https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1800&q=85"
+};
+
 function PricingModal({service,onClose,selectedTier,onChoose}:{service:Service;onClose:()=>void;selectedTier:string;onChoose:(tier:string)=>void}){
  useEffect(()=>{const previous=document.body.style.overflow;document.body.style.overflow="hidden";const onKey=(event:KeyboardEvent)=>{if(event.key==="Escape")onClose()};window.addEventListener("keydown",onKey);return()=>{document.body.style.overflow=previous;window.removeEventListener("keydown",onKey)}},[onClose]);
  return <div className="pricing-modal-backdrop" onMouseDown={event=>{if(event.target===event.currentTarget)onClose()}}>
   <section className="pricing-modal" role="dialog" aria-modal="true" aria-labelledby="pricing-modal-title">
    <header className="pricing-modal-head"><span className="mono">{service.number} / SERVICE DETAIL</span><button type="button" aria-label="Close service details" onClick={onClose}>×</button></header>
    <div className="pricing-modal-content">
-    <div className="pricing-modal-intro"><span className="mono">STUDIO CAPABILITY</span><h2 id="pricing-modal-title">{service.name}</h2><p>{service.overview}</p></div>
-    <div className="pricing-modal-columns"><article><span className="mono">WHAT'S INCLUDED</span><ul>{service.deliverables.map(item=><li key={item}>{item}</li>)}</ul></article><article><span className="mono">HOW WE APPROACH IT</span><ol>{service.process.map(item=><li key={item}>{item}</li>)}</ol></article></div>
+    <section className="service-editorial-hero" style={{backgroundImage:`linear-gradient(90deg,rgba(8,8,8,.62),rgba(8,8,8,.08)),url("${serviceVisuals[service.name]}")`}}>
+     <div className="service-editorial-side mono">STUDIO / {service.number}<br/>SERVICE PROFILE</div>
+     <div className="service-editorial-copy"><span className="mono">A CONSIDERED APPROACH TO</span><h2 id="pricing-modal-title">{service.name}</h2><p>{service.detail}</p></div>
+     <span className="service-editorial-index mono">SHASHWAT ANEJA / STUDIO</span>
+    </section>
+    <div className="service-editorial-intro"><span className="mono">THE STUDIO PERSPECTIVE</span><p>{service.overview}</p></div>
+    <div className="service-editorial-columns">
+     <article className="service-editorial-benefits"><span className="mono">01 / WHAT YOU GET</span><h3>Built around<br/><i>the details.</i></h3><ul>{service.deliverables.map((item,index)=><li key={item}><b>0{index+1}</b><span>{item}</span></li>)}</ul></article>
+     <article className="service-editorial-process"><span className="mono">02 / HOW IT COMES TOGETHER</span><h3>A clear route<br/><i>from brief to build.</i></h3><ol>{service.process.map((item,index)=><li key={item}><b>0{index+1}</b><span>{item}</span></li>)}</ol><div className="service-editorial-note"><span className="mono">THE OUTCOME</span><p>{service.tiers[1].summary}</p></div></article>
+    </div>
     <div className="pricing-modal-plan-head"><span className="mono">SELECT A SERVICE LEVEL</span><h3>Choose the right scope.</h3><p>All prices are starting prices. The final deliverables and scope are confirmed before work begins.</p></div>
     <div className="pricing-modal-plans">{service.tiers.map((tier,index)=><article className={`pricing-modal-plan ${index===1?"is-professional":""} ${selectedTier===tier.name?"is-selected":""}`} key={tier.name}>
       <div className="pricing-modal-plan-top"><span className="mono">0{index+1} / {tier.name.toUpperCase()}</span>{index===1&&<b>MOST CHOSEN</b>}</div><h4>{tier.name}</h4><strong>{tier.price}</strong><p>{tier.summary}</p><ul>{tier.features.map(feature=><li key={feature}>{feature}</li>)}</ul><button type="button" onClick={()=>onChoose(tier.name)}>{selectedTier===tier.name?"Selected ✓":"Choose "+tier.name+" ↗"}</button>
