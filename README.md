@@ -33,3 +33,10 @@ npm test
 Online checkout remains disabled by default. Do not enable it until the owner confirms the detailed service prices and whether ₹4,999 is a minimum project value or a minimum booking payment. See [production launch instructions](docs/production-launch.md).
 
 Never commit secrets. Configure Razorpay and Supabase credentials only in Vercel environment settings. The Supabase service-role key must never be exposed to browser code.
+
+
+## Dashboard account handoff
+
+After Razorpay's signed `payment.captured` webhook verifies the paid order and persists the booking, the webhook provisions or links a Supabase Auth account, assigns the trusted `app_metadata.role=client` claim, and sends the client a secure setup/sign-in link plus the Dashboard URL through Resend. No permanent password is emailed. The invite link redirects to `/auth/set-password` on the Dashboard. The client/project/payment read policies restrict client sessions to their own records; administrators must be assigned `app_metadata.role=admin` from a trusted environment.
+
+Configure `DASHBOARD_URL`, `RESEND_API_KEY`, and a verified `STUDIO_FROM_EMAIL` alongside the existing payment and Supabase secrets. The Supabase Auth redirect allowlist must include the Dashboard set-password URL. Apply the new Dashboard access migration before enabling payment webhooks.
