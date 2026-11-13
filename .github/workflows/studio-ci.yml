@@ -20,7 +20,7 @@ jobs:
         with:
           version: 11.25.0
       - name: Install dependencies
-        run: ppnpm install --frozen-lockfile --frozen-lockfile
+        run: pnpm install --frozen-lockfile
       - name: Typecheck
         run: pnpm typecheck
       - name: Production build
