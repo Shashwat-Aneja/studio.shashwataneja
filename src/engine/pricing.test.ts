@@ -1,6 +1,6 @@
 import {describe,expect,it} from "vitest";
-import {assessBudgetFit,calculateEstimate} from "./pricing";
-import {defaultRequirement} from "./requirements";
+import {assessBudgetFit,calculateEstimate} from "./pricing.js";
+import {defaultRequirement} from "./requirements.js";
 
 describe("indicative pricing",()=>{
   it("returns an ordered estimate with a credited 2 percent booking amount",()=>{

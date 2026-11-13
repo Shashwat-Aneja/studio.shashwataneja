@@ -1,5 +1,5 @@
-import {serviceCatalog,type ServiceItem} from "../data/catalog";
-import type {ProjectRequirement} from "./requirements";
+import {serviceCatalog,type ServiceItem} from "../data/catalog.js";
+import type {ProjectRequirement} from "./requirements.js";
 export const pricingRules={rush:1.20,priority:1.25,bookingRate:0.02,extraIntegration:2499,bundleDiscount:[0.05,0.15] as const,multiServiceDiscount:[0.05,0.10] as const};
 export type Estimate={low:number;high:number;booking:number;discount:number;services:ServiceItem[];notes:string[];confidence:"indicative"};
 const featureRanges:Record<string,readonly [number,number]>={

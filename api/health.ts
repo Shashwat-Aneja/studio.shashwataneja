@@ -1,22 +1,5 @@
-export default function handler(req: any, res: any) {
-  res.setHeader("Content-Type", "application/json; charset=utf-8");
-  res.setHeader("Cache-Control", "no-store");
-  if (req.method !== "GET") {
-    res.statusCode = 405;
-    res.end(JSON.stringify({ error: "Method not allowed." }));
-    return;
-  }
-  const env = process.env;
-  const checkoutConfigured = env.PAYMENTS_ENABLED === "true" &&
-    Boolean(env.RAZORPAY_KEY_ID && env.RAZORPAY_KEY_SECRET && env.RAZORPAY_WEBHOOK_SECRET &&
-      env.SUPABASE_URL && env.SUPABASE_SERVICE_ROLE_KEY);
-  res.statusCode = 200;
-  res.end(JSON.stringify({
-    service: "studio",
-    status: "online",
-    checkout: checkoutConfigured ? "configured" : "disabled",
-    message: checkoutConfigured
-      ? "Payment environment variables are present; run the payment and database acceptance tests before launch."
-      : "Studio is available in preview mode. Online checkout is disabled until pricing terms and provider configuration are approved."
-  }));
+export default function handler(req:any,res:any){
+ res.setHeader('Content-Type','application/json');res.setHeader('Cache-Control','no-store');res.statusCode=req.method==='GET'?200:405;
+ const e=process.env;
+ res.end(JSON.stringify({service:'studio',status:'online',checkout:'disabled',dashboard:'disabled',booking: e.SUPABASE_URL&&e.SUPABASE_SERVICE_ROLE_KEY&&e.RESEND_API_KEY&&e.STUDIO_FROM_EMAIL&&e.BOOKING_RATE_LIMIT_SECRET?'configuration_present_unverified':'configuration_missing'}));
 }

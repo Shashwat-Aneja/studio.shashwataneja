@@ -15,10 +15,13 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
       - name: Install dependencies
-        run: npm install --no-audit --no-fund
+        run: ppnpm install --frozen-lockfile --frozen-lockfile
       - name: Typecheck
-        run: npm run typecheck
+        run: pnpm typecheck
       - name: Production build
-        run: npm run build
+        run: pnpm build

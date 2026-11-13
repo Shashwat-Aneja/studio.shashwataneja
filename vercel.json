@@ -31,5 +31,11 @@
       "source": "/pricing/",
       "destination": "/index.html"
     }
-  ]
+  ],
+  "functions": {
+    "api/booking-request.ts": {
+      "includeFiles": "server/assets/**",
+      "maxDuration": 30
+    }
+  }
 }

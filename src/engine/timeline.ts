@@ -1,4 +1,4 @@
-import type {ProjectRequirement} from "./requirements";
+import type {ProjectRequirement} from "./requirements.js";
 export type TimelinePhase={name:string;duration:number;note:string};
 export function buildTimeline(r:ProjectRequirement):TimelinePhase[]{
  const base=r.scale==="lean"?[["Discovery",1],["Design",2],["Build",4],["QA",1],["Launch",1]]:r.scale==="advanced"?[["Discovery",2],["Planning",3],["Design",5],["Build",10],["QA",3],["Launch",2]]:[["Discovery",2],["Planning",2],["Design",4],["Build",7],["QA",2],["Launch",1]];

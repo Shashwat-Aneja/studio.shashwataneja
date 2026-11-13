@@ -1,4 +1,4 @@
-import type {ProjectBlueprint} from "./blueprint";
+import type {ProjectBlueprint} from "./blueprint.js";
 
 export type BookingDraft={
   blueprint:ProjectBlueprint;
@@ -24,11 +24,11 @@ export function validateBooking(draft:BookingDraft):string[]{
  if(!draft.phone.trim()) errors.push("Phone number is required.");
  else if(draft.phone.replace(/\D/g,"").length<7||draft.phone.replace(/\D/g,"").length>15) errors.push("Enter a valid phone number.");
  if(draft.notes.length>2000) errors.push("Notes must be 2,000 characters or fewer.");
- if(!draft.agreementAccepted) errors.push("Agreement acceptance is required before payment.");
+ if(!draft.agreementAccepted) errors.push("Agreement acceptance is required before submission.");
 
  return errors;
 }
 
-export function createBookingSummary(draft:BookingDraft):BookingSummary{
- return {status:"payment",bookingAmount:draft.blueprint.estimate.booking,message:"The displayed 2% is an illustrative booking estimate based on the current scope range. The actual booking amount is calculated as 2% of the final written quotation and credited towards the project total. Secure checkout remains unavailable until Studio enables payments."};
+export function createBookingSummary(_draft:BookingDraft):BookingSummary{
+ return {status:"review",bookingAmount:0,message:"Provisional request pending Studio review. No payment is collected."};
 }

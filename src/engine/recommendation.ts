@@ -1,4 +1,4 @@
-import type {ProjectRequirement} from "./requirements";
+import type {ProjectRequirement} from "./requirements.js";
 export type Recommendation={serviceId:string;reason:string;weight:number};
 const map:Record<ProjectRequirement["goal"],string[]>={
  presence:["business-website","landing-page","portfolio","personal-website"],
