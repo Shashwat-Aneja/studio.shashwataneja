@@ -25,8 +25,11 @@ describe("indicative pricing",()=>{
     expect(standard.high).toBeGreaterThan(reduced.high);
   });
   it("assesses whether an estimate overlaps the selected budget band",()=>{
-    expect(assessBudgetFit({low:12000,high:22000,booking:4999,discount:0,services:[],notes:[],confidence:"indicative"},"10-25k")).toBe("within");
-    expect(assessBudgetFit({low:30000,high:40000,booking:4999,discount:0,services:[],notes:[],confidence:"indicative"},"10-25k")).toBe("over");
-    expect(assessBudgetFit({low:3000,high:8000,booking:4999,discount:0,services:[],notes:[],confidence:"indicative"},"25-50k")).toBe("below");
+    expect(assessBudgetFit({low:12000,high:22000,booking:4999,discount:0,services:[],breakdown:[],notes:[],confidence:"indicative"},"10-25k")).toBe("within");
+    expect(assessBudgetFit({low:30000,high:40000,booking:4999,discount:0,services:[],breakdown:[],notes:[],confidence:"indicative"},"10-25k")).toBe("over");
+    expect(assessBudgetFit({low:3000,high:8000,booking:4999,discount:0,services:[],breakdown:[],notes:[],confidence:"indicative"},"25-50k")).toBe("below");
   });
 });
+
+// Every provisional line item must reconcile with the displayed overall range.
+it("reconciles itemized scope and delivery adjustments",()=>{for(const deliverySpeed of ["standard","priority","rush"] as const){const e=calculateEstimate({...defaultRequirement,features:["CMS","Analytics"],integrations:["CRM"],deliverySpeed},["business-website","ecommerce"]);expect(e.breakdown.reduce((n,x)=>n+x.low,0)).toBe(e.low);expect(e.breakdown.reduce((n,x)=>n+x.high,0)).toBe(e.high);}});
