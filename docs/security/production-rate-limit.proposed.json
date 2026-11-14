@@ -1,9 +1,11 @@
 {
-  "status": "DRAFT_NOT_APPLIED",
+  "status": "PREPARED_NOT_APPLIED",
   "projectId": "prj_y7kOXRlxs6qvfWpn7rZpIBbFfXYU",
-  "environment": "production",
-  "match": {"method": "POST", "path": "/api/booking-request"},
+  "match": {"host": "studio.shashwataneja.com", "method": "POST", "path": "/api/booking-request"},
+  "environment": "ANY_FOR_THIS_EXACT_HOST",
   "rate": {"requests": 20, "windowSeconds": 60, "key": "source_ip", "algorithm": "fixed_window"},
   "rollout": {"initialAction": "log", "approvedAction": "rate_limit", "rejectionStatus": 429},
-  "requiresExplicitProductionApproval": true
+  "activationGate": "Verify proxy/client-IP provenance, existing preview-rule overlap, representative traffic and false positives, exact provider schema, observation and rollback before enforcement.",
+  "requiresNewApplicationDeployment": false,
+  "ownerAuthorizedSubjectToSafetyVerification": true
 }

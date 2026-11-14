@@ -3,15 +3,21 @@ import {buildPdf} from '../server/pdf.js';
 import {issueIdentity,verifyIdentity} from '../server/booking-identity.js';
 import {sendBookingEmail} from '../server/booking-email.js';
 export const config={maxDuration:30};
-const respond=(res:any,status:number,body:unknown)=>{res.statusCode=status;res.setHeader('Content-Type','application/json');res.setHeader('Cache-Control','no-store');res.end(JSON.stringify(body));};
+const respond=(res:any,status:number,body:any)=>{
+ // Allowlisted aggregate outcomes only: never log contact data, tokens, bodies or provider errors.
+ try{console.info(JSON.stringify({event:'studio.booking.response',status,outcome:status===200?(body.status==='pending_review'?'accepted':'prepared'):status===202?'partial':status>=500?'unavailable':'rejected'}));}catch{/* Monitoring must not interrupt a response. */}
+ res.statusCode=status;res.setHeader('Content-Type','application/json');res.setHeader('Cache-Control','no-store');res.end(JSON.stringify(body));};
 const validSender=(from:string)=>!/[\x00-\x1f\x7f]/.test(from)&&/^(?:[^<>]+ <)?[a-z0-9.!#$%&'*+/=?^_`{|}~-]+@(?:[a-z0-9-]+\.)*shashwataneja\.com>?$/i.test(from);
 export default async function handler(req:any,res:any){
  if(req.method!=='POST'){res.setHeader('Allow','POST');return respond(res,405,{error:'Method not allowed.'});}
  try{if(req.headers['sec-fetch-site']==='cross-site')throw Error();const rawOrigin=req.headers.origin;if(typeof rawOrigin!=='string')throw Error();const origin=new URL(rawOrigin);if(origin.origin!==rawOrigin)throw Error();if(origin.protocol!=='https:'&&!(origin.protocol==='http:'&&origin.hostname==='localhost'))throw Error();if(origin.host!==req.headers.host)throw Error();}catch{return respond(res,403,{error:'Origin is not allowed.'});}
  if(!/^application\/json(?:\s*;|$)/i.test(String(req.headers['content-type']||'')))return respond(res,415,{error:'JSON required.'});
- if(Number(req.headers['content-length']||0)>24000)return respond(res,413,{error:'Request too large.'});
+ const length=req.headers['content-length'];
+ if(length!==undefined&&(typeof length!=='string'||!/^\d+$/.test(length)))return respond(res,400,{error:'Invalid request length.'});
+ if(length!==undefined&&Number(length)>24000)return respond(res,413,{error:'Request too large.'});
  let body=req.body;
- try{if(typeof body==='string')body=JSON.parse(body);if(Buffer.byteLength(JSON.stringify(body??{}))>24000)return respond(res,413,{error:'Request too large.'});}catch{return respond(res,400,{error:'Invalid JSON.'});}
+ if((typeof body==='string'||Buffer.isBuffer(body))&&Buffer.byteLength(body)>24000)return respond(res,413,{error:'Request too large.'});
+ try{if(Buffer.isBuffer(body))body=body.toString('utf8');if(typeof body==='string')body=JSON.parse(body);if(Buffer.byteLength(JSON.stringify(body??{}))>24000)return respond(res,413,{error:'Request too large.'});}catch{return respond(res,400,{error:'Invalid JSON.'});}
  let snapshot;try{snapshot=parseRequest(body);if(body.action!=='prepare'&&body.action!=='submit')throw Error('Invalid request action.');}catch(err){return respond(res,400,{error:err instanceof Error?err.message:'Invalid request.'});}
  const {RESEND_API_KEY:key,STUDIO_FROM_EMAIL:from}=process.env;
  if(!key||!from||!validSender(from))return respond(res,503,{error:'Booking email is not configured yet. Please contact studio@shashwataneja.com.'});

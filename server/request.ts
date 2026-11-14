@@ -8,7 +8,7 @@ export function parseRequest(body:any):RequestSnapshot{
  const c=body?.contact;
  if(body?.adultDeclared!==true)throw Error('Booking requests are limited to adults aged 18 or older. Please confirm your eligibility.');
  if(!c||typeof c.name!=='string'||!c.name.trim()||c.name.length>120||/[\x00-\x1f\x7f]/.test(c.name)||typeof c.email!=='string'||c.email.length>200||!/^[A-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[A-Z0-9](?:[A-Z0-9-]*[A-Z0-9])?(?:\.[A-Z0-9](?:[A-Z0-9-]*[A-Z0-9])?)+$/i.test(c.email)||/[\x00-\x1f\x7f]/.test(c.email)||typeof c.phone!=='string'||c.phone.length>30||!/^\+?[\d ()-]{7,30}$/.test(c.phone)||c.phone.replace(/\D/g,'').length<7||c.phone.replace(/\D/g,'').length>15||typeof c.notes!=='string'||c.notes.length>2000||body.agreementAccepted!==true||body.website)throw Error('Please check contact details and accept the terms.');
- const base={contact:{name:c.name.trim(),email:c.email.trim().toLowerCase(),phone:c.phone.trim(),notes:c.notes.trim()},adultDeclared:true as const,privacyVersion:'studio-privacy-2026-11-14-v3',agreementVersion:'studio-terms-2026-11-14-v3'};
+ const base={contact:{name:c.name.trim(),email:c.email.trim().toLowerCase(),phone:c.phone.trim(),notes:c.notes.trim()},adultDeclared:true as const,privacyVersion:'studio-privacy-2026-11-14-v4',agreementVersion:'studio-terms-2026-11-14-v4'};
  if(body.kind==='package'){
   const s=services.find(s=>s.number===body.selection?.serviceId),t=s?.tiers.find(t=>t.name===body.selection?.tier);
   if(!s||!t)throw Error('Choose a valid service and tier.');

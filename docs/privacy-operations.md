@@ -1,3 +1,21 @@
+# Privacy operations — Stage 2 update
+
+Owner: Shashwat Aneja, studio@shashwataneja.com. The same person handles customer support, privacy and designated customer grievances; the purpose of each request determines the process. This is not a statutory DPO appointment. This update supersedes older pending-decision notes on grievance contact, venue and ordinary enquiry retention below. It does not certify operational completion.
+
+The approved manual retention procedure is [data-retention-deletion.md](data-retention-deletion.md). The intended ordinary unconverted-enquiry period is six calendar months after the last substantive interaction. Use that document's clock, inventory, daily due-date workflow, holds, deletion verification and provider exceptions. No automation was configured and no real records were deleted here.
+
+## Complaint handling procedure
+
+Shashwat Aneja monitors studio@shashwataneja.com daily. For each complaint, record receipt time in UTC, a complaint reference, Build ID if known, category, acknowledgment due time, resolution due date, responsible person and outcome in a private register outside Git. Acknowledge within 48 hours and redress within one month where E-Commerce Rules apply; applicable shorter deadlines take priority. SPDI grievances require expeditious handling within one month where in scope. Give the complainant their reference and a factual outcome; do not falsely label an unresolved complaint closed. Before the 2026 amendment commences, verify complaint-copy and NCH-convergence requirements. Unavailability/cover arrangements and a synthetic complaint/deletion drill remain operator tasks.
+
+Verify requests proportionately through the originating email/Build ID, without routine government ID collection or disclosure of another person's enquiry. Access/correction/deletion, withdrawal of optional follow-up and project cancellation are different matters. Track legal holds by necessity and review date. Explain provider limitations and preserve statutory remedies. Do not invent a refund outcome in response to a privacy request.
+
+See [security and incident response](security/stage-2-controls-and-incidents.md), [legal matrix](legal-compliance-matrix.md) and [commercial decision register](commercial-terms-review.md).
+
+---
+
+## Earlier inventory and audit context (historical; updated procedure above governs)
+
 # Privacy and email operations — proposed runbook
 
 14 November 2026. This is an executable operating procedure for owner adoption, not evidence that historical requests, retention controls or breach exercises have already been completed. Operator: Shashwat Aneja. Public business address and formal grievance responsibility need confirmation. Use studio@shashwataneja.com as the published contact, without claiming a designated officer exists.
@@ -27,9 +45,9 @@ No analytics SDK, marketing subscription, third-party iframe or Supabase booking
 6. Delete or restrict applicable copies after checking tax/dispute/security/legal holds. Document exceptions, provider backup limitations and actual result. Do not promise immediate global deletion. Notify the requester of completed actions and unresolved provider retention.
 7. Escalate unresolved statutory complaints through applicable consumer mechanisms/courts and, when legally available, DPDP machinery. Publish the confirmed officer/address before launch where required.
 
-## Retention decision required
+## Earlier retention decision gap — superseded by Stage 2 procedure
 
-Owner and adviser must set categories, periods, trigger events, legal grounds/holds, storage region, access, deletion owner and provider verification. Separate unconverted enquiries, approved contracts/tax records, incident/security logs, delivery metadata, retry tokens and backups. Do not impose a universal short purge or a universal one-year rule. Existing unknown retention is disclosed in the policy. No destructive mailbox purge, account deletion or DNS change was performed.
+Stage 2 now sets the ordinary enquiry period and deletion owner; adviser/operator must still resolve separate category schedules, legal grounds/holds, regions and provider execution. Separate unconverted enquiries, approved contracts/tax records, incident/security logs, delivery metadata, retry tokens and backups. Do not impose a universal short purge or a universal one-year rule. Existing unknown retention is disclosed in the policy. No destructive mailbox purge, account deletion or DNS change was performed.
 
 ## Incident handling
 

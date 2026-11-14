@@ -30,6 +30,10 @@
         {
           "key": "Cross-Origin-Resource-Policy",
           "value": "same-origin"
+        },
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=86400"
         }
       ]
     }
@@ -52,7 +56,8 @@
   },
   "git": {
     "deploymentEnabled": {
-      "feature/studio-foundation": false
+      "feature/studio-foundation": false,
+      "release/studio-production-2026-11-14": false
     }
   }
 }
