@@ -47,4 +47,6 @@ The [final CCPA Dark Patterns Guidelines2023](https://consumeraffairs.gov.in/pub
 - [Contract Act India Code](https://www.indiacode.nic.in/bitstream/123456789/2187/2/A187209.pdf), [Majority Act](https://www.indiacode.nic.in/bitstream/123456789/15299/1/majorityact.pdf). Contract PDF fetch was intermittently unavailable; statutory references should be rechecked by counsel, not treated as a signed contract review.
 - [CBIC consolidated CGST Act](https://cbic-gst.gov.in/pdf/CGST-Act-2017-amended-01012022.pdf) is a dated consolidation; obtain current tax advice and later amendments. No current tax-registration assessment is certified.
 
+Copyright and Majority Act official endpoints were intermittently unavailable during retrieval; the cited sections are review items, not a completed specialist opinion. Recheck the official current consolidated texts before final contracting.
+
 No blanket foreign-law conclusion: assess GDPR/other jurisdictions if Studio deliberately targets or serves those markets. Merely having a public website does not establish all foreign-law triggers. No evidence of a marketplace, payment intermediary, regulated financial service or registered Consent Manager was found; their specialized duties are not imposed here without facts.
