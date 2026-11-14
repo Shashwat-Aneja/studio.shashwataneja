@@ -33,3 +33,5 @@ describe("indicative pricing",()=>{
 
 // Every provisional line item must reconcile with the displayed overall range.
 it("reconciles itemized scope and delivery adjustments",()=>{for(const deliverySpeed of ["standard","priority","rush"] as const){const e=calculateEstimate({...defaultRequirement,features:["CMS","Analytics"],integrations:["CRM"],deliverySpeed},["business-website","ecommerce"]);expect(e.breakdown.reduce((n,x)=>n+x.low,0)).toBe(e.low);expect(e.breakdown.reduce((n,x)=>n+x.high,0)).toBe(e.high);}});
+
+it("prices faster rush delivery above priority and standard, with shorter timelines",async()=>{const {timelineDays}=await import("./timeline.js");const r=defaultRequirement;expect(calculateEstimate({...r,deliverySpeed:"rush"}).low).toBeGreaterThan(calculateEstimate({...r,deliverySpeed:"priority"}).low);expect(calculateEstimate({...r,deliverySpeed:"priority"}).low).toBeGreaterThan(calculateEstimate(r).low);expect(timelineDays({...r,deliverySpeed:"rush"})).toBeLessThan(timelineDays({...r,deliverySpeed:"priority"}));expect(timelineDays({...r,deliverySpeed:"priority"})).toBeLessThanOrEqual(timelineDays(r));});

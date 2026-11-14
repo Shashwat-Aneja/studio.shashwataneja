@@ -1,6 +1,6 @@
 import {serviceCatalog,type ServiceItem} from "../data/catalog.js";
 import type {ProjectRequirement} from "./requirements.js";
-export const pricingRules={rush:1.20,priority:1.25,bookingRate:0.02,extraIntegration:2499,bundleDiscount:[0.05,0.15] as const,multiServiceDiscount:[0.05,0.10] as const};
+export const pricingRules={rush:1.25,priority:1.20,bookingRate:0.02,extraIntegration:2499,bundleDiscount:[0.05,0.15] as const,multiServiceDiscount:[0.05,0.10] as const};
 export type Estimate={breakdown:{label:string;low:number;high:number}[];low:number;high:number;booking:number;discount:number;services:ServiceItem[];notes:string[];confidence:"indicative"};
 const featureRanges:Record<string,readonly [number,number]>={
  "CMS":[5000,12000],"Blog":[3000,8000],"Booking":[5000,12000],"Payments":[5000,12000],

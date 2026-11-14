@@ -14,11 +14,11 @@ export async function buildPdf(snapshot:RequestSnapshot,id:string,created:string
  function heading(text:string){if(y+85>786)page();y+=14;line(text,12,'#873f32');}
  page(true);
  line(`BUILD ID  ${id}`,9);line(`REQUESTED  ${new Date(created).toISOString().slice(0,10)} / ${snapshot.kind.toUpperCase()}`,9);
- line(snapshot.title,22);line(`${snapshot.contact.name} | ${snapshot.contact.email} | ${snapshot.contact.phone}`,10);
+ line(snapshot.title,22);line(`Estimated timeline: ${snapshot.timeline}`,10);line(`${snapshot.contact.name} | ${snapshot.contact.email} | ${snapshot.contact.phone}`,10);
  heading('01 / PROJECT BREAKDOWN');
  for(const item of snapshot.items){doc.fontSize(11);const labelHeight=doc.heightOfString(item.label,{width:515});doc.fontSize(9);const amountHeight=doc.heightOfString(item.amount,{width:515});if(y+labelHeight+amountHeight+18>786)page();line(item.label,11);line(item.amount,9,'#766d5b');}
  heading('02 / PAYMENT SUMMARY');
- line(`Indicative project estimate: ${snapshot.estimate}`,12);line('Final quotation: pending Studio review\nAmount received: INR 0\nAmount payable now: INR 0\nPayment status: NOT COLLECTED\nPayment method: Not selected - online payments disabled',10);
+ line(`Indicative project estimate: ${snapshot.estimate}`,12);line('Final quotation: Pending approval\nPayment received: ₹0\nAmount payable now: ₹0\nPayment status: NOT COLLECTED\nPayment method: Not selected - online payments disabled',10);
  line('Taxes, third-party costs, milestones and any advance are confirmed in the approved quotation. No paid status or booking confirmation is implied.',9);
  heading('03 / BUILD SPECIFICATIONS');for(const spec of snapshot.specifications)line(spec,10);
  if(snapshot.contact.notes){doc.fontSize(10);if(y+60+doc.heightOfString(snapshot.contact.notes,{width:515})>786)page();heading('04 / CUSTOMER NOTES');line(snapshot.contact.notes);}

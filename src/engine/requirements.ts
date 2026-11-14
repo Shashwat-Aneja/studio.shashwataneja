@@ -19,3 +19,14 @@ export function requirementSummary(r:ProjectRequirement){return[
  r.automationRequirement==="none"?null:r.automationRequirement+" automation",
  r.infrastructureRequirement?"launch infrastructure":null,r.integrations.length?r.integrations.length+" integration(s)":null
 ].filter(Boolean) as string[];}
+
+export const featureOptions=["CMS","Blog","Booking","Payments","Analytics","SEO","Automation","Dashboard","Authentication","API"] as const;
+export const integrationOptions=[
+ ["payments","Payment provider","Checkout and transactions."],
+ ["whatsapp","WhatsApp","Customer communication."],
+ ["crm","CRM","Lead and customer records."],
+ ["google-sheets","Google Sheets","Lightweight data synchronisation."],
+ ["webhooks","Webhooks / API","Connect an external service."]
+] as const;
+// No preference identifiers are currently offered by the workshop.
+export const preferenceOptions:readonly string[]=[];

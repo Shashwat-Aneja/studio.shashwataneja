@@ -1,23 +1,39 @@
-# Booking requests and operational handoff
+# Email-only booking operations
 
-## Configuration blockers found on 13 November 2026
+## Current workflow
 
-- Connected Supabase `studio` project `rcayefwtodtklawrupfg` is INACTIVE; schema inspection returns “Database is possibly not accessible at the moment”. No live migration was applied.
-- Vercel project `studio-shashwataneja` has Supabase URL/service role entries, but no RESEND_API_KEY, STUDIO_FROM_EMAIL or BOOKING_RATE_LIMIT_SECRET. Secret contents were not read or copied.
-- Restore the database, inspect its existing schema, then apply `supabase/migrations/20261113145105_studio_booking_requests.sql`. Validate RLS and service-only RPC grants before enabling submissions. Use an isolated preview database if available.
-- Configure the three missing variables directly in Vercel, scoped to Preview / feature/studio-foundation. Use an authenticated sender domain and sending-only email key. Generate a random rate-limit secret. Redeploy the feature preview. Never add credentials to frontend variables or source control.
-- The exact original BUILD DETAILS attachment is unavailable in the referenced chat export. The implementation follows the supplied design description using a bundled warm interior photograph and Noto Sans. Review the sample PDF before adopting the design.
+Pricing packages and the seven-step custom workshop use the same contact/terms form. The server validates contact details, honeypot and allowlisted project choices and calculates the scope and pricing itself. It issues a UUID Build ID, timestamp and HMAC-signed retry identity. The same endpoint then creates the provisional A4 BUILD DETAILS PDF and sends the complete request through Resend to **studio@shashwataneja.com only**, with the validated customer email as reply-to. A customer sees success only after Resend accepts the message.
 
-## Delivery and retries
+The owner reviews the email, contacts the customer and approves the final quotation manually. No database, account, customer dashboard, payment capture or automatic customer invoice is used. The old order and webhook routes return 410. Historical Supabase migrations remain in source control for reference but are not launch requirements and must not be applied for this workflow.
 
-The database RPC serializes request-ID and hashed-IP locks, enforces five new requests per IP per hour, and stores immutable scope, normalized contact details, consent version and timestamp. The table has RLS, no public access, and only service-role grants. The RPC is SECURITY INVOKER and executable only by service_role. Rate keys are salted hashes, not raw IP addresses. Review retention periodically and remove expired customer records according to Studio policy; deleting a row also removes its retry protection.
+## Required configuration
 
-A request UUID survives retries while the form remains open. Reusing it with different details returns 409. After an error, retry unchanged details; reopen the form for a new request. Resend receives a deterministic attachment and request-specific idempotency key. Provider failures leave the row pending. If receipt persistence fails after acceptance, retry uses the same provider key. Ambiguous pending requests older than 23 hours require manual reconciliation before resending because provider deduplication expires after 24 hours. Do not blindly resend them. Pending rows can be reviewed by the owner in Supabase; no automatic background queue or delivery webhook is provisioned in this phase.
+Only `RESEND_API_KEY` and `STUDIO_FROM_EMAIL` are required. Both are server-only. The preview uses `Studio <studio@mail.shashwataneja.com>` on the verified Resend sending subdomain, with a sending-only key restricted to that domain. Incoming `studio@shashwataneja.com` is a separate Cloudflare forwarding route to the owner's Gmail inbox.
 
-The provider's accepted message ID is recorded; `email_status=sent` means accepted, not confirmed inbox delivery. Check provider delivery/bounce status when investigating missing notifications. No customer email is automatically sent. Review scope, price, availability, taxes and milestones, then manually approve and prepare the final quotation/invoice. Never infer payment from a request or mark a request paid.
+`SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `BOOKING_RATE_LIMIT_SECRET`, `STUDIO_ALLOWED_ORIGIN` and `DASHBOARD_URL` are not read by booking requests. Old project-level Supabase/dashboard variables are left untouched because other or historical functionality may use them. The unused Supabase JavaScript package and unused frontend booking contracts were removed. No database migration is needed.
+
+## Identity, retries and delivery guarantees
+
+The prepare action sends no email. It creates the UUID on the server and signs the normalized request, approved sender, Build ID and timestamp. Submit requires those signed details. Changed content, forged IDs, future timestamps and identities older than 23 hours are rejected before sending. Sender/key rotation or a changed pricing/terms snapshot invalidates old retry identities; contact Studio rather than silently generating a replacement.
+
+The browser retains the identity while the form is open and in sessionStorage indexed by a SHA-256 fingerprint of the form data. Contact data itself is not put in sessionStorage. Re-entering identical details in the same browser session reuses the identity, including after a reload. Clearing storage, a new browser session, changed details or separate devices may create a new Build ID and duplicate mail. Do not treat this as global deduplication.
+
+Resend's `Idempotency-Key` uses the Build ID hash. Retries use identical subject, text, sender, timestamp and deterministic PDF bytes. Resend retains idempotency keys for **24 hours**: https://resend.com/docs/dashboard/emails/idempotency-keys . Our 23-hour window leaves a safety margin. After ambiguous timeout/rejection, retry unchanged details within that window. After expiry, contact Studio with the Build ID to reconcile before submitting again. Each click attempts one send, with a 10-second provider timeout; there are no automatic background retries or queues.
+
+Without persistent application state, exactly-once delivery is not guaranteed. The provider may accept a timed-out request, and an accepted notification can still bounce. Success means provider acceptance, not delivery, a confirmed booking or approved quotation. Check Resend delivery status and the owner inbox during incident investigation. The complete booking record is in the email/PDF, not a Studio database.
+
+## Abuse controls
+
+Same-origin checks, JSON/body-size limits, allowlisted inputs, email-header injection checks and a real offscreen honeypot are enforced and covered by tests. No per-instance in-memory counter pretends to provide shared rate limiting.
+
+A Vercel WAF rule is scoped to **POST /api/booking-request in preview only**, with a 20-request/IP/60-second fixed window. A normal submission uses two requests (prepare then submit); unchanged retries use one. It was first configured in observation mode, then the owner explicitly approved preview enforcement and testing. Verify the active rule and an actual 429 response before calling the limit tested. Production is intentionally outside this rule and needs its own reviewed rollout before a public launch. Counters are regional, not a globally exact cap. Shared-IP users can share a bucket; distributed abuse may need tighter platform protection. Do not claim production rate limiting from preview evidence.
+
+## PDF and commercial state
+
+A4 portrait, full-width warm interior photograph, dark gradient, white BUILD DETAILS heading, cream body, itemized indicative prices, customer/Build metadata and payment summary are retained. The PDF prominently says PROVISIONAL / PENDING REVIEW, Payment received: ₹0, Amount payable now: ₹0, Final quotation: Pending approval. It is not a paid or tax invoice. The original reference attachment is unavailable, so exact visual fidelity is not claimed. Render package and long custom samples and inspect every page when changing layout.
 
 ## Verification
 
-`pnpm build` runs frontend/API type checks plus tests for package pricing authority, custom inputs, methods/origins/body limits, missing configuration, storage-before-email, fixed recipient and PDF attachment, duplicate completion, conflicts, throttling, provider failures, deterministic retries, stale retries and disabled payment endpoints. `PDF_SAMPLES=1 pnpm test` creates ignored PDFs under output/pdf for visual review.
+`pnpm build` runs tests, frontend and API TypeScript checks and production build. `PDF_SAMPLES=1 pnpm test` writes ignored samples under output/pdf. There is no configured lint tool; use `git diff --check` plus the existing TypeScript unused-symbol checks instead of inventing a lint result.
 
-Live acceptance after configuration: submit a test package and custom request; confirm exactly one row and one Studio notification for each, inspect attachments, retry the same request ID, confirm no customer recipient, no auth user/project/payment record, and zero money collected. Live success is blocked until the database and email settings above are restored. Validate migration permissions with anon/authenticated negative checks and service-role positive checks before calling it production ready.
+Tests cover package/custom sends, server pricing, options and contact validation, missing configuration, no-Supabase operation, owner-only recipient, subject/body/PDF, provider failure/timeout, immutable retry bytes, identity forgery/content changes/expiry and disabled legacy endpoints. Browser checks must cover both entry points, same-ID retry after rejection, monthly Care display and mobile layout. Final live acceptance must send clearly labelled owner-only test requests and inspect Resend's delivery status; do not infer delivery from a successful HTTP response alone.

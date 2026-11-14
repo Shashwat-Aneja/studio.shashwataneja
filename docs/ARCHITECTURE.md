@@ -1,3 +1,7 @@
+# Current booking architecture
+
+Booking requests are email-only: validated contact/scope -> server pricing -> signed UUID retry identity -> provisional PDF -> owner-only Resend email. No Studio database, payment or dashboard code is called. Historical notes below are not current launch instructions. See [booking workflow](booking-workflow.md).
+
 # Studio Architecture
 
 ## Product boundary

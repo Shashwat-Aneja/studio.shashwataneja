@@ -924,3 +924,5 @@ section{max-width:1440px;padding:clamp(78px,9vw,132px) clamp(20px,7vw,100px)!imp
  .pricing-modal{width:100%;height:95svh;max-height:95svh}
  .pricing-modal-content{padding:24px 18px}
 }
+
+.booking-fields{border:0;padding:0;margin:0;min-width:0}.booking-fields:disabled{opacity:1}.booking-honeypot{position:absolute!important;left:-10000px!important;width:1px;height:1px;overflow:hidden}.booking-reference{overflow-wrap:anywhere;color:var(--copy);font-size:.85rem;line-height:1.6}
