@@ -6,7 +6,7 @@ Date: 14 November 2026. Owner explicitly answered **“hold publication”** dur
 
 Branch: release/studio-production-2026-11-14, based directly on Stage 2 HEAD93b78ccd751a7c5697c66e92dc1feb80f83be49c. It preserves Stage1bfbc67c and customer-email implementation3c83526. Remote feature/studio-foundation was verified at b2d74bf87db39d2aa69e11382f96bbbe8a13df3d; remote main at49263b7063379c1c09aa17f1a6e5b2714535a4f2. Neither has been merged into or overwritten by this preparation.
 
-Only release-branch Git-deployment suppression and its regression check are added beyond Stage2 runtime/configuration. Packages, package features, estimator, email/PDF templates, signed identities and retry algorithms are unchanged from the verified Stage2 implementation. Existing historical SQL files remain dormant; do not run migrations or activate payment/dashboard/database code.
+Release-branch Git-deployment suppression and its regression check are added beyond Stage2 runtime/configuration. The existing pricing test output directory is also made portable for Linux CI; its assertions are unchanged. Packages, package features, estimator, email/PDF templates, signed identities and retry algorithms are unchanged from the verified Stage2 implementation. Existing historical SQL files remain dormant; do not run migrations or activate payment/dashboard/database code.
 
 The full main-to-candidate diff is necessarily large because main is the coming-soon site. The candidate was recovered through the existing feature history, not reconstructed or combined with unrelated branches. Existing draft PR1 has outdated payment/dashboard prose and is not the release approval. The new release review must describe the email-only implementation accurately and remain draft/unmerged.
 
@@ -29,6 +29,8 @@ vercel.json now explicitly sets git.deploymentEnabled=false for release/studio-p
 - Built-site local Chrome tests at1440×1000 and390×844 passed package flow, required unchecked declarations, keyboard interaction, both partial-failure directions, signed-receipt presentation/retry, non-JSON429feedback, legal routes/v4 text and closing. Added full homepage → seven-step custom workshop → blueprint → enquiry → mocked dual acceptance. Zero page errors. API responses were intercepted; no actual email was sent.
 - pnpm audit --json:0reported advisories at every severity. Bundle scan for configured credential names/live key prefixes returned0matches. Neither is a complete security certification.
 - git diff --check passed; package data, estimator calculations, signing code and PDF template unchanged from Stage2.
+
+The first GitHub PR run failed only because the pricing test used /private/tmp, a macOS-specific path that Linux could not create. It was corrected to the repository-relative ignored output/pdf/package-pricing directory using node:path.resolve. All27 pricing/email/PDF assertions remain intact. Hosted CI must pass after this fix before the review package is considered verified. The initial failed runs are43594546256and43594546277; their failures are not reported as passes.
 
 Synthetic evidence is local and ignored under output/release-candidate: build.log, dependency-audit.json, browser.log, browser-check.cjs, pdf-checks.json and package/custom rendered PNGs. The local preview is a built artifact check; Vite preview does not enforce Vercel response headers.
 
@@ -78,3 +80,7 @@ After all gates and candidate approval: verify project/production-branch setting
 Baseline recovery target: public alias → dpl_G4sPydL3L9UY8A3pAvb48UQuQ84z; retain its existing branch association and original DNS record until the approved transition. On a later failed release, restore the recorded mapping/binding and verify actual hostname routes/headers/API; disable only any newly introduced misbehaving firewall rule, leaving existing rules intact. HSTS rollback requires receiving a new header and is not guaranteed instantaneous. No live rollback exercise was performed during the hold.
 
 Final intended URL remains https://studio.shashwataneja.com. **The deployment objective is not complete; publication is explicitly held.**
+
+## Review status
+
+Draft review: https://github.com/Shashwat-Aneja/studio.shashwataneja/pull/2. Publication remains held. The public alias was read back unchanged after branch and PR creation; Vercel listed zero deployments for the release branch. No main merge occurred. Exact remote HEAD and final hosted-check results are reported in the completion response.

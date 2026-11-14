@@ -2,6 +2,7 @@ import React from 'react';
 import {renderToStaticMarkup} from 'react-dom/server';
 import {it,expect,vi} from 'vitest';
 import {writeFileSync,mkdirSync} from 'node:fs';
+import {resolve} from 'node:path';
 import {services} from './src/data/packages';
 import PricingPage from './src/PricingPage';
 import BookingFlow from './src/components/BookingFlow';
@@ -14,7 +15,7 @@ function request(body:unknown){return{method:'POST',headers:{origin:'https://stu
 it('verifies all 27 packages through rendered frontend, authoritative server, PDF attachments and mocked email payloads',async()=>{
  vi.stubEnv('RESEND_API_KEY','pricing-verification-no-real-secret');vi.stubEnv('STUDIO_FROM_EMAIL','Studio <studio@mail.shashwataneja.com>');
  const page=renderToStaticMarkup(<PricingPage/>);expect((page.match(/class="service-price-card"/g)||[]).length).toBe(9);
- const folder='/private/tmp/studio-pricing-pdf-checks';mkdirSync(folder,{recursive:true});const manifest=[];
+ const folder=resolve('output/pdf/package-pricing');mkdirSync(folder,{recursive:true});const manifest=[];
  try{for(let i=0;i<services.length;i++)for(let j=0;j<3;j++){
   const s=services[i],t=s.tiers[j],price=approved[i][j];expect(t.price).toBe(price);expect(page).toContain(`<strong>${price}</strong>`);
   const form=renderToStaticMarkup(<BookingFlow selection={{serviceId:s.number,tier:t.name}} onClose={()=>{}}/>);expect(form).toContain(`<strong>${price}</strong>`);
