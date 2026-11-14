@@ -50,7 +50,7 @@ export default function App(){
  const [step,setStep]=useState(1);
  const [requirement,setRequirement]=useState<ProjectRequirement>(defaultRequirement);
  const [selectedFeatures,setSelectedFeatures]=useState<string[]>([]);
- const [theme,setTheme]=useState<ThemeMode>(()=>(localStorage.getItem("studio-theme") as ThemeMode)||"paper");
+ const [theme,setTheme]=useState<ThemeMode>(()=>{try{const saved=localStorage.getItem("studio-theme");return ["paper","void","terminal","dusk"].includes(saved||"")?saved as ThemeMode:"paper";}catch{return "paper";}});
  const [faq,setFaq]=useState<number|null>(null);
  const [faqTab,setFaqTab]=useState("start");
  const [blueprintOpen,setBlueprintOpen]=useState(false);
@@ -64,7 +64,7 @@ export default function App(){
  const blueprint=useMemo(()=>createBlueprint(liveRequirement),[liveRequirement]);
  const recommendations=useMemo(()=>recommendServices(liveRequirement).slice(0,5),[liveRequirement]);
 
- useEffect(()=>{document.documentElement.dataset.theme=theme;localStorage.setItem("studio-theme",theme)},[theme]);
+ useEffect(()=>{document.documentElement.dataset.theme=theme;(()=>{try{localStorage.setItem("studio-theme",theme);}catch{/* Theme persistence is optional. */}})()},[theme]);
  useEffect(()=>{
    const timer=window.setInterval(()=>setHeroSlide(current=>(current+1)%heroSlides.length),6500);
    return()=>window.clearInterval(timer);

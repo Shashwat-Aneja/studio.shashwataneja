@@ -1,5 +1,5 @@
-# Studio email-only launch
+# Studio launch gates
 
-Follow [booking operations](booking-workflow.md). The historical payment and dashboard migrations are not required. Both legacy payment endpoints return 410 permanently in this phase; environment variables cannot enable them. Do not follow old Razorpay/Supabase launch instructions for the current booking workflow.
+Follow [booking operations](booking-workflow.md), [legal matrix](legal-compliance-matrix.md), [security findings](security-audit.md), [privacy operations](privacy-operations.md) and [proposed production controls](security/production-security-plan.md). These identify unresolved decisions and evidence; they do not certify launch readiness.
 
-Required: configure a sending-only Resend key and verified Studio sender in Vercel, review the preview, publish and test the scoped Vercel rate-limit rule, then run owner-only live email acceptance and delivery checks. Do not activate payment or dashboard features.
+No production deployment or WAF/DNS enforcement change is authorized by this audit. Keep previews isolated from the branch-linked public domain. Payments and dashboard endpoints remain disabled; do not apply historical Supabase migrations. Configure a restricted sending key/verified sender in the intended environment only after approval, verify both transactional messages and provisional PDFs, and complete the outstanding business address, grievance, retention, supplier/access and applicable incident/log obligations before public launch.

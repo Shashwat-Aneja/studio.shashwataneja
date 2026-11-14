@@ -2,7 +2,7 @@ import {createHash,createHmac,randomUUID,timingSafeEqual} from 'node:crypto';
 import type {RequestSnapshot} from './request.js';
 export type BookingIdentity={buildId:string;issuedAt:string;signature:string};
 export const RETRY_WINDOW_MS=23*60*60*1000;
-const signature=(id:Omit<BookingIdentity,'signature'>,snapshot:RequestSnapshot,from:string,key:string)=>createHmac('sha256',key).update('studio-email-booking-v1\n'+JSON.stringify({id,snapshot,from})).digest('hex');
+const signature=(id:Omit<BookingIdentity,'signature'>,snapshot:RequestSnapshot,from:string,key:string)=>createHmac('sha256',key).update('studio-email-booking-v2\n'+JSON.stringify({id,snapshot,from})).digest('hex');
 export function issueIdentity(snapshot:RequestSnapshot,from:string,key:string):BookingIdentity{
  const id={buildId:randomUUID(),issuedAt:new Date().toISOString()};
  return {...id,signature:signature(id,snapshot,from,key)};
@@ -16,4 +16,4 @@ export function verifyIdentity(value:any,snapshot:RequestSnapshot,from:string,ke
  return {...id,signature:value.signature};
 }
 // Provider keys contain no customer information.
-export const providerKey=(id:BookingIdentity)=>'studio-booking/'+createHash('sha256').update(id.buildId).digest('hex');
+export const providerKey=(id:BookingIdentity,kind:'studio'|'customer')=>'studio-booking/v2/'+createHash('sha256').update(id.buildId).digest('hex')+'/'+kind;

@@ -1,0 +1,9 @@
+{
+  "status": "DRAFT_NOT_APPLIED",
+  "projectId": "prj_y7kOXRlxs6qvfWpn7rZpIBbFfXYU",
+  "environment": "production",
+  "match": {"method": "POST", "path": "/api/booking-request"},
+  "rate": {"requests": 20, "windowSeconds": 60, "key": "source_ip", "algorithm": "fixed_window"},
+  "rollout": {"initialAction": "log", "approvedAction": "rate_limit", "rejectionStatus": 429},
+  "requiresExplicitProductionApproval": true
+}

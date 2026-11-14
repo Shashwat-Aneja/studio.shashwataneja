@@ -8,7 +8,7 @@ Use Node 22+ and pnpm 11.25.0. Run `pnpm install --frozen-lockfile`, then `pnpm 
 
 ## Booking workflow
 
-Pricing tier selection and custom workshop requests open the same contact/terms form. POST `/api/booking-request` validates inputs and derives scope/pricing server-side. A server-issued UUID and signed retry token are prepared before a notification and provisional BUILD DETAILS PDF are sent to **studio@shashwataneja.com only**. Customer email is reply-to, never a recipient. A successful response means the provider accepted the notification, not inbox delivery or project approval.
+Pricing tier selection and custom workshop requests open the same contact/terms form with a separate required adult declaration. POST `/api/booking-request` validates inputs and derives scope/pricing server-side. A server-issued UUID and signed retry token are prepared before a notification and provisional BUILD DETAILS PDF are sent to **studio@shashwataneja.com** and separately to the validated customer address, with distinct retry keys. Customer email is reply-to on the owner message; Studio is reply-to on the customer acknowledgment. A successful response means both messages were accepted by the provider, not inbox delivery or project approval.
 
 Every request is pending review. No payment is collected, no dashboard account is provisioned, and no finalized invoice is sent. The legacy order/webhook endpoints return 410 regardless of old environment settings. Historical payment/dashboard migrations remain for existing data; this workflow does not invoke them.
 

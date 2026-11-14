@@ -22,6 +22,6 @@ export async function buildPdf(snapshot:RequestSnapshot,id:string,created:string
  line('Taxes, third-party costs, milestones and any advance are confirmed in the approved quotation. No paid status or booking confirmation is implied.',9);
  heading('03 / BUILD SPECIFICATIONS');for(const spec of snapshot.specifications)line(spec,10);
  if(snapshot.contact.notes){doc.fontSize(10);if(y+60+doc.heightOfString(snapshot.contact.notes,{width:515})>786)page();heading('04 / CUSTOMER NOTES');line(snapshot.contact.notes);}
- heading('REVIEW & APPROVAL');line('For Studio review only. Confirm scope and availability before preparing a final quotation. A finalized invoice must not be sent to the customer before approval.',10);line(`Terms accepted: ${snapshot.agreementVersion} / ${created}`,8);
+ heading('REVIEW & APPROVAL');line('This is a provisional request summary. Studio will review the requirements and confirm scope and availability before an approved quotation. It does not confirm a contract or payment.',10);line('Age declaration: 18 or older and legally capable (self-declared, not verified).',9);line(`Terms acknowledged: ${snapshot.agreementVersion} / ${created}. Privacy notice: ${snapshot.privacyVersion}.`,8);
  doc.end();return done;
 }
