@@ -1,0 +1,29 @@
+{
+  "name": "studio-shashwataneja",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "pnpm test && tsc -b && tsc -p tsconfig.api.json && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc -b && tsc -p tsconfig.api.json",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "pdfkit": "0.17.2",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "22.19.0",
+    "@types/pdfkit": "0.17.4",
+    "@types/react": "^19.1.12",
+    "@types/react-dom": "^19.1.9",
+    "@vitejs/plugin-react": "^5.0.4",
+    "typescript": "^5.9.2",
+    "vite": "^7.1.7",
+    "vitest": "^4.1.12"
+  },
+  "packageManager": "pnpm@11.25.0"
+}

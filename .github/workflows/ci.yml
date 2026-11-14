@@ -1,0 +1,26 @@
+name: Studio quality checks
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main, feature/studio-foundation]
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Typecheck and production build
+        run: pnpm build

@@ -1,0 +1,12 @@
+export type ServiceCategory = { id:string; number:string; name:string; description:string; services:string[] };
+export const serviceCategories: ServiceCategory[] = [
+{id:"web",number:"01",name:"Web Development",description:"Websites, applications and digital products built around a clear business goal.",services:["Landing pages","Business websites","Portfolios","CMS","Blogs","Web apps","Dashboards","SaaS MVPs","Booking systems","Custom platforms"]},
+{id:"design",number:"02",name:"UI/UX & Design",description:"Interfaces and visual systems that make the product easier to understand and use.",services:["UI/UX audits","Wireframes","Prototypes","Design systems","Website UI","App UI","Dashboard design"]},
+{id:"branding",number:"03",name:"Branding",description:"A coherent identity that can travel from the first impression to every customer touchpoint.",services:["Logo","Visual identity","Brand guidelines","Naming support","Templates","Rebranding"]},
+{id:"content",number:"04",name:"Content",description:"Clear, purposeful content for websites, products, documentation and marketing.",services:["Website copy","Landing page copy","Blogs","Product descriptions","Technical writing","Documentation","Marketing copy"]},
+{id:"launch",number:"05",name:"Launch & Infrastructure",description:"The technical layer required to take a digital product from files to a reliable public presence.",services:["Domain setup","Hosting","DNS","SSL","Deployment","Migration","Cloudflare","Business email"]},
+{id:"growth",number:"06",name:"SEO & Growth",description:"Measurement, search visibility and conversion improvements grounded in the actual product.",services:["SEO audits","Technical SEO","On-page SEO","Local SEO","Analytics","Content strategy","Conversion optimization"]},
+{id:"commerce",number:"07",name:"E-commerce",description:"Storefronts and commerce workflows from catalogue to payments and fulfilment.",services:["Shopify","WooCommerce","Custom stores","Payments","Shipping","Inventory","E-commerce SEO"]},
+{id:"automation",number:"08",name:"Automation",description:"Connected workflows that remove repetitive work and move information between the tools you already use.",services:["APIs","Forms","Webhooks","CRM","WhatsApp","Google Sheets","Payments","Lead routing"]},
+{id:"care",number:"09",name:"Care",description:"Ongoing technical care for security, reliability, performance and support.",services:["Maintenance","Security updates","Backups","Performance monitoring","Hosting management","Technical support"]}
+];
